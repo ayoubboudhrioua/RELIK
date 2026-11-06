@@ -1,0 +1,11 @@
+node_modules/
+dist/
+test-results/
+playwright-report/
+node_modules/
+dist/
+.impeccable/config.local.json
+.impeccable/
+site/test-results/
+site/playwright-report/
+playwright.config.js

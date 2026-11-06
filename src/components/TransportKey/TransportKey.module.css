@@ -1,0 +1,200 @@
+/*
+  A key has travel: a solid bottom edge (--key-edge) that disappears
+  when the key is pressed and the key moves down 3px.
+*/
+.key {
+  --key-top: var(--putty-light);
+  --key-base: #ddd4c1;
+  --key-edge: #a99e86;
+  --key-text: var(--ink);
+  --led-off: #9b917c;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 52px;
+  padding: var(--space-3) var(--space-5) var(--space-3) var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-key);
+  background: linear-gradient(180deg, var(--key-top) 0%, var(--key-base) 100%);
+  color: var(--key-text);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: left;
+  text-decoration: none;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.55),
+    0 4px 0 var(--key-edge),
+    0 7px 12px -3px rgb(0 0 0 / 0.35);
+  transform: translateY(0);
+  transition:
+    transform var(--dur-press) var(--ease-out),
+    box-shadow var(--dur-press) var(--ease-out),
+    filter var(--dur-hover) var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.sm {
+  min-height: 44px;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4) var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+}
+
+.sm .legend {
+  width: 22px;
+  height: 22px;
+}
+
+.lg {
+  min-height: 64px;
+  padding: var(--space-4) var(--space-6) var(--space-4) var(--space-5);
+  font-size: var(--text-lg);
+}
+
+.graphite {
+  --key-top: #3a3b3f;
+  --key-base: #2b2c2f;
+  --key-edge: #0e0f10;
+  --key-text: var(--paper-on-dark);
+  --led-off: var(--led-off-dark);
+  border-color: rgb(0 0 0 / 0.7);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.12),
+    0 4px 0 var(--key-edge),
+    0 7px 12px -3px rgb(0 0 0 / 0.6);
+}
+
+/* The primary key: signal fill with graphite text (5.41:1). */
+.signal {
+  --key-top: #ff7240;
+  --key-base: var(--signal);
+  --key-edge: var(--signal-edge);
+  --key-text: var(--graphite);
+  --led-off: var(--signal-edge);
+  border-color: var(--signal-edge);
+}
+
+/* The engraved symbol sits in a small recessed window. */
+.legend {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  flex: none;
+  border-radius: var(--radius-plate);
+  background: rgb(0 0 0 / 0.07);
+  box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.25), 0 1px 0 rgb(255 255 255 / 0.4);
+}
+
+.graphite .legend {
+  background: rgb(0 0 0 / 0.3);
+  box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.6), 0 1px 0 rgb(255 255 255 / 0.06);
+}
+
+.legend:empty {
+  display: none;
+}
+
+.label {
+  min-width: 0;
+}
+
+/* LED in the top-right corner: lit while hovered, pressed or busy. */
+.led {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--led-off);
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 0.4);
+  transition: background var(--dur-hover) var(--ease-out), box-shadow var(--dur-hover) var(--ease-out);
+}
+
+.signal .led {
+  background: var(--led-off);
+}
+
+/* ---- Hover ---- */
+.key:hover,
+.key[data-demo='hover'] {
+  filter: brightness(1.04);
+}
+
+.key:hover .led,
+.key[data-demo='hover'] .led,
+.key[aria-pressed='true'] .led,
+.key[aria-current='step'] .led,
+.key[aria-busy='true'] .led,
+.key[data-demo='active'] .led {
+  background: var(--led-lit);
+  box-shadow: var(--led-halo);
+}
+
+.signal:hover .led,
+.signal[data-demo='hover'] .led,
+.signal[aria-pressed='true'] .led {
+  background: var(--led-lit-pale);
+  box-shadow: none;
+}
+
+/* ---- Pressed (active, or a toggle key that is on) ---- */
+.key:active,
+.key[aria-pressed='true'],
+.key[aria-current='step'],
+.key[data-demo='active'] {
+  transform: translateY(3px);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.3),
+    inset 0 2px 4px rgb(0 0 0 / 0.18),
+    0 1px 0 var(--key-edge),
+    0 2px 4px -1px rgb(0 0 0 / 0.3);
+}
+
+/* The current step also lights its legend window, so the state shows
+   by position, light and colour together. */
+.key[aria-current='step'] .legend {
+  background: var(--signal);
+  color: var(--graphite);
+  box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.35);
+}
+
+/* ---- Focus ---- */
+.key:focus-visible,
+.key[data-demo='focus'] {
+  outline: 2px solid var(--focus);
+  outline-offset: 4px;
+}
+
+/* ---- Disabled: flat, no travel ---- */
+.key:disabled {
+  cursor: not-allowed;
+  filter: saturate(0.4);
+  color: color-mix(in srgb, var(--key-text) 62%, var(--key-base));
+  transform: translateY(3px);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.2), 0 1px 0 var(--key-edge);
+}
+
+/* ---- Loading: the reel turns slowly ---- */
+.key[aria-busy='true'] {
+  cursor: progress;
+}
+
+.reel {
+  animation: turn 1.6s linear infinite;
+}
+
+@keyframes turn {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reel { animation: none; }
+  .key { transition: none; }
+}

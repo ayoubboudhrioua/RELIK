@@ -1,0 +1,98 @@
+.room {
+  background: var(--graphite);
+  color: var(--paper-on-dark);
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  align-items: center;
+  gap: var(--space-7) var(--space-8);
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--space-9) var(--gutter);
+}
+
+.copy {
+  display: grid;
+  gap: var(--space-4);
+  justify-items: start;
+}
+
+.title {
+  font-size: var(--text-3xl);
+  line-height: var(--leading-tight);
+}
+
+.text {
+  max-width: 44ch;
+  color: var(--muted-on-dark);
+  font-size: var(--text-lg);
+}
+
+.cta {
+  margin-top: var(--space-4);
+}
+
+/* The console: a raised panel with six channel strips. */
+.console {
+  margin: 0;
+  padding: var(--space-5);
+  border-radius: var(--radius-case);
+  background: var(--panel);
+  box-shadow: var(--shadow-raised-dark), 0 0 0 1px #000;
+}
+
+.preset {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid #000;
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.05);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+.note {
+  color: var(--muted-on-dark);
+}
+
+.channels {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.channel {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-1);
+  border-radius: var(--radius-key);
+  background: var(--channel);
+  box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.6);
+}
+
+/* Long fit words like "Strong fit" wrap inside narrow strips. */
+.channel :global(*) {
+  overflow-wrap: anywhere;
+}
+
+.rank {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--muted-on-dark);
+}
+
+@media (max-width: 900px) {
+  .inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .channels {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

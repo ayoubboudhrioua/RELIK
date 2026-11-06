@@ -1,0 +1,161 @@
+.room {
+  background: var(--putty-deep);
+  border-block: 1px solid var(--hairline);
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  align-items: center;
+  gap: var(--space-7) var(--space-8);
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--space-9) var(--gutter);
+}
+
+.copy {
+  order: 2;
+  display: grid;
+  gap: var(--space-4);
+  justify-items: start;
+}
+
+.title {
+  font-size: var(--text-3xl);
+  line-height: var(--leading-tight);
+}
+
+.text {
+  max-width: 42ch;
+  color: var(--ink-muted);
+  font-size: var(--text-lg);
+}
+
+.cta {
+  margin-top: var(--space-4);
+}
+
+/* The cassette rack: a recessed putty box holding the spines. */
+.rack {
+  margin: 0;
+  padding: var(--space-4);
+  border-radius: var(--radius-key);
+  background: #bdb29b;
+  box-shadow: var(--shadow-inset), 0 1px 0 rgb(255 255 255 / 0.5);
+}
+
+.rackLabel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.spines {
+  display: grid;
+  gap: 4px;
+}
+
+/* A cassette case seen edge-on: the J-card spine. */
+.spine {
+  --spine-bg: var(--graphite);
+  --spine-ink: var(--paper-on-dark);
+  --spine-muted: var(--muted-on-dark);
+  --spine-band: var(--signal);
+
+  display: grid;
+  grid-template-columns: 10px minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: 48px;
+  padding-right: var(--space-4);
+  border-radius: 2px;
+  background: var(--spine-bg);
+  color: var(--spine-ink);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.12),
+    inset 0 -2px 0 rgb(0 0 0 / 0.25),
+    0 2px 2px rgb(30 20 0 / 0.3);
+}
+
+.spine[data-style='paper'] {
+  --spine-bg: var(--putty-light);
+  --spine-ink: var(--ink);
+  --spine-muted: var(--ink-muted);
+  --spine-band: var(--graphite);
+}
+
+/* Signal J-card: graphite text on orange (5.41:1). */
+.spine[data-style='signal'] {
+  --spine-bg: var(--signal);
+  --spine-ink: var(--graphite);
+  --spine-muted: var(--graphite);
+  --spine-band: var(--graphite);
+}
+
+.band {
+  align-self: stretch;
+  background: var(--spine-band);
+  border-radius: 2px 0 0 2px;
+}
+
+.name {
+  overflow: hidden;
+  font-family: var(--font-display);
+  font-stretch: 85%;
+  font-weight: 800;
+  font-size: var(--text-lg);
+  line-height: 1.1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.year {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.status {
+  min-width: 7.5rem;
+  color: var(--spine-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .copy {
+    order: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .spine {
+    grid-template-columns: 8px minmax(0, 1fr) auto;
+    grid-template-rows: auto auto;
+    row-gap: 0;
+    padding-block: var(--space-2);
+  }
+
+  .band {
+    grid-row: span 2;
+  }
+
+  .status {
+    grid-column: 2 / -1;
+    min-width: 0;
+    text-align: left;
+  }
+}

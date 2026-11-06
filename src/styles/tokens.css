@@ -1,0 +1,149 @@
+/*
+  RELIK design tokens.
+  Source of truth for values: design-system/relik/MASTER.md (contrast ratios are listed there).
+  Rule of thumb: components use the semantic tokens (--text, --focus...) so they
+  work in both putty rooms and dark rooms.
+*/
+
+:root {
+  /* ---- Casing materials ---- */
+  --putty: #e4dccb;
+  --putty-light: #efe9dc;
+  --putty-deep: #cfc5b0;
+  --graphite: #1c1d1f;
+  --panel: #2a2b2e;
+  --crt: #0b0d0a;
+  --sunken-dark: #151618; /* wells, plates and bays in dark rooms */
+  --channel: #222326; /* Lab channel strips and Out module */
+  --led-off-dark: #4b4c50; /* an unlit LED on a dark panel */
+
+  /* ---- Phosphor (screens only) ---- */
+  --amber: #ffb000;
+  --amber-dim: #c78a00;
+  --amber-glow: rgb(255 176 0 / 0.35);
+  --vfd: #7fe3cf;
+  --vfd-glow: rgb(127 227 207 / 0.3);
+
+  /* ---- The one accent: a fill, never text on putty ---- */
+  --signal: #ff5a1f;
+  --signal-edge: #b8400f;
+
+  /* ---- Ink ---- */
+  --ink: #1c1d1f;
+  --ink-muted: #514b40;
+  --line: #736b59;
+  --hairline: #b9ae96;
+  --paper-on-dark: #e4dccb;
+  --muted-on-dark: #a8a091;
+  --line-on-dark: #808185;
+  --error: #843010;
+
+  /* ---- Dymo tape ---- */
+  --dymo-tape: #141414;
+  --dymo-ink: #f2efe8;
+
+  /* ---- Type ---- */
+  --font-display: 'Archivo', 'Arial Narrow', sans-serif;
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --font-screen: 'VT323', 'IBM Plex Mono', monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1.0625rem;
+  --text-lg: 1.3125rem;
+  --text-xl: clamp(1.4rem, 1.2rem + 0.8vw, 1.75rem);
+  --text-2xl: clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem);
+  --text-3xl: clamp(2.25rem, 1.6rem + 2.6vw, 3.75rem);
+  --text-display: clamp(2.75rem, 1.6rem + 4.6vw, 6rem);
+
+  --leading-tight: 1.05;
+  --leading-snug: 1.25;
+  --leading-body: 1.55;
+  --tracking-label: 0.08em;
+  --measure: 68ch;
+
+  /* ---- Space (4px base) ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+  --gutter: clamp(16px, 4vw, 56px);
+  --page-max: 1360px;
+
+  /* ---- Radius: follows the physical object ---- */
+  --radius-plate: 2px;
+  --radius-key: 4px;
+  --radius-case: 10px;
+  --radius-glass: 18px;
+
+  /* ---- Depth: light from above ---- */
+  --shadow-raised:
+    inset 0 1px 0 rgb(255 255 255 / 0.45),
+    0 1px 0 rgb(0 0 0 / 0.12),
+    0 6px 12px -4px rgb(40 30 10 / 0.28);
+  --shadow-raised-dark:
+    inset 0 1px 0 rgb(255 255 255 / 0.08),
+    0 1px 0 rgb(0 0 0 / 0.5),
+    0 8px 16px -6px rgb(0 0 0 / 0.6);
+  --shadow-inset:
+    inset 0 8px 16px -6px rgb(40 30 10 / 0.35),
+    inset 0 1px 2px rgb(40 30 10 / 0.25);
+  --shadow-inset-dark:
+    inset 0 8px 16px -6px rgb(0 0 0 / 0.7),
+    inset 0 1px 2px rgb(0 0 0 / 0.6);
+
+  /* ---- LEDs: a lens with a hot spot. The halo only shows with CRT effects on. ---- */
+  --led-lit: radial-gradient(circle at 35% 30%, #ffd9c7 0 15%, var(--signal) 55%, #d4430e 100%);
+  --led-lit-pale: radial-gradient(circle at 35% 30%, #ffffff 0 15%, #fff3c4 55%, #e8cf86 100%);
+  --led-halo: inset 0 -1px 1px rgb(0 0 0 / 0.25);
+
+  /* ---- Motion ---- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-press: 90ms;
+  --dur-hover: 180ms;
+  --dur-state: 260ms;
+  --dur-reveal: 600ms;
+
+  /* ---- Semantic tokens: putty room (default) ---- */
+  --surface: var(--putty);
+  --surface-raised: var(--putty-light);
+  --surface-sunken: var(--putty-deep);
+  --text: var(--ink);
+  --text-muted: var(--ink-muted);
+  --control-line: var(--line);
+  --focus: var(--graphite);
+}
+
+html[data-crt='on'] {
+  --led-halo: 0 0 6px 1px rgb(255 90 31 / 0.55);
+}
+
+/* Dark rooms (nav, hero console, Lab): add data-room="dark" to the container. */
+[data-room='dark'] {
+  --surface: var(--graphite);
+  --surface-raised: var(--panel);
+  --surface-sunken: var(--sunken-dark);
+  --text: var(--paper-on-dark);
+  --text-muted: var(--muted-on-dark);
+  --control-line: var(--line-on-dark);
+  --focus: var(--amber);
+}
+
+/* A light panel inside a dark room (e.g. the sign-in form): back to putty values. */
+[data-room='light'] {
+  --surface: var(--putty);
+  --surface-raised: var(--putty-light);
+  --surface-sunken: var(--putty-deep);
+  --text: var(--ink);
+  --text-muted: var(--ink-muted);
+  --control-line: var(--line);
+  --focus: var(--graphite);
+}

@@ -1,0 +1,271 @@
+/* A dark room: the console stands on a sunken graphite floor. */
+.room {
+  padding: 0 var(--gutter) var(--space-8);
+  background: var(--sunken-dark);
+}
+
+.console {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  border-radius: 0 0 var(--radius-case) var(--radius-case);
+}
+
+/*
+  Desktop:  [ screen  ][ bench ]
+            [ headline  across ]
+            [ lead | keys | deck ]
+  Sized so the headline and both keys fit a 1280×720 laptop screen.
+*/
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  grid-template-areas:
+    'screen bench'
+    'headline headline'
+    'controls controls';
+  gap: var(--space-5) var(--space-7);
+}
+
+.screen {
+  grid-area: screen;
+  align-self: stretch;
+}
+
+.screen > div {
+  height: 100%;
+}
+
+/* The screen's content area: readout at the top, search at the bottom. */
+.screenContent {
+  display: grid;
+  align-content: space-between;
+  gap: var(--space-4);
+  height: 100%;
+}
+
+.readout {
+  display: grid;
+  align-content: start;
+  gap: 2px;
+  /* Room for all four boot lines, so nothing moves while they appear. */
+  min-height: calc(3 * 1.25rem * 1.15 + 2rem * 1.15 + 3 * 2px);
+}
+
+/* ---- The CRT search: a real labelled form ---- */
+.search {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.searchLabel {
+  font-family: var(--font-screen);
+  font-size: 1.25rem;
+  line-height: 1;
+  color: var(--amber);
+}
+
+.searchRow {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 0;
+  min-height: 48px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--amber-dim);
+  border-radius: var(--radius-key);
+  background: rgb(255 176 0 / 0.04);
+  color: var(--amber);
+  caret-color: var(--amber);
+  font-family: var(--font-screen);
+  font-size: 1.625rem;
+}
+
+.searchInput::placeholder {
+  color: var(--amber-dim);
+}
+
+.searchInput:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+
+.searchButton,
+.suggestion,
+.skip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--amber-dim);
+  border-radius: var(--radius-key);
+  background: transparent;
+  color: var(--amber);
+  font-family: var(--font-screen);
+  font-size: 1.375rem;
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.searchButton:hover,
+.suggestion:hover,
+.skip:hover {
+  background: rgb(255 176 0 / 0.12);
+}
+
+.searchButton:focus-visible,
+.suggestion:focus-visible,
+.skip:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+
+.suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.suggestionsLabel {
+  margin-right: var(--space-1);
+  font-family: var(--font-screen);
+  font-size: 1.25rem;
+  color: var(--amber-dim);
+  text-transform: uppercase;
+}
+
+.suggestion {
+  padding: 0 var(--space-3);
+}
+
+.skip {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  z-index: 4;
+}
+
+/* ---- Bench: the lit bay ---- */
+.bench {
+  grid-area: bench;
+}
+
+.bench .bay {
+  --bay-h: clamp(190px, 27vh, 300px);
+}
+
+/* In the hero the specimen fills more of its bay. */
+.bench .bay > a > div:first-child {
+  padding: var(--space-4) var(--space-4) var(--space-3);
+}
+
+.bench .bay img {
+  max-height: calc(var(--bay-h) - 2.5rem);
+}
+
+/* ---- Headline: stamped on the faceplate, never inside the screen ---- */
+.headline {
+  grid-area: headline;
+  font-size: min(clamp(2.4rem, 0.4rem + 4.6vw, 4.75rem), 9.5vh);
+  font-weight: 900;
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  color: var(--paper-on-dark);
+}
+
+.line {
+  display: block;
+}
+
+/* ---- Control strip: lead, the two keys, the tape counter and meters ---- */
+.controls {
+  grid-area: controls;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4) var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid #000;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06);
+}
+
+.lead {
+  flex: 1 1 20rem;
+  max-width: 40ch;
+  color: var(--muted-on-dark);
+  font-size: var(--text-lg);
+  line-height: 1.4;
+}
+
+.keys {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.deck {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-left: auto;
+}
+
+.vu {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+}
+
+.vuLabel {
+  color: var(--muted-on-dark);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+
+/* ---- Narrow screens: screen, headline, actions, then the specimen ---- */
+@media (max-width: 960px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'screen'
+      'headline'
+      'controls'
+      'bench';
+    gap: var(--space-5);
+  }
+
+  .headline {
+    font-size: clamp(2.4rem, 0.4rem + 5.4vw, 4rem);
+  }
+
+  .deck {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  /* Phones: the console runs edge to edge. */
+  .room {
+    padding: 0 0 var(--space-6);
+  }
+
+  .console {
+    border-radius: 0;
+  }
+
+  .keys {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+  }
+
+  .searchButton {
+    padding: 0 var(--space-3);
+  }
+}

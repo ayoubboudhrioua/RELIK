@@ -1,0 +1,149 @@
+/* Bezel: the moulded frame around the glass. */
+.bezel {
+  --phosphor: var(--amber);
+  --phosphor-dim: var(--amber-dim);
+  --phosphor-glow: var(--amber-glow);
+
+  padding: clamp(10px, 1.4vw, 18px);
+  border-radius: calc(var(--radius-glass) + 8px);
+  background: linear-gradient(180deg, #34353a 0%, var(--panel) 30%, #202124 100%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.1),
+    inset 0 -2px 3px rgb(0 0 0 / 0.5),
+    0 10px 24px -10px rgb(0 0 0 / 0.55);
+}
+
+.bezel[data-tone='vfd'] {
+  --phosphor: var(--vfd);
+  --phosphor-dim: #5fae9f;
+  --phosphor-glow: var(--vfd-glow);
+}
+
+/* Glass: slightly curved, darker at the edges. */
+.glass {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-glass);
+  background: radial-gradient(ellipse 120% 100% at 50% 45%, #141810 0%, var(--crt) 70%);
+  box-shadow:
+    inset 0 0 0 1px rgb(0 0 0 / 0.9),
+    inset 0 0 40px rgb(0 0 0 / 0.85),
+    inset 0 2px 6px rgb(0 0 0 / 0.9);
+  color: var(--phosphor);
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  padding: clamp(var(--space-4), 2.4vw, var(--space-6));
+}
+
+/* Scanlines: at most 8% opacity, only when CRT effects are on. */
+.scanlines {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  background: repeating-linear-gradient(
+    180deg,
+    rgb(0 0 0 / 1) 0px,
+    rgb(0 0 0 / 1) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  transition: opacity var(--dur-state) var(--ease-out);
+}
+
+:global(html[data-crt='on']) .scanlines {
+  opacity: 0.08;
+}
+
+:global(html[data-crt='on']) .glass {
+  text-shadow: 0 0 6px var(--phosphor-glow);
+}
+
+/* A soft highlight on the curved glass. */
+.reflection {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: radial-gradient(ellipse 70% 40% at 30% 8%, rgb(255 255 255 / 0.07), transparent 70%);
+}
+
+/* ---- Power-on: the picture opens from a bright horizontal line ---- */
+.bezel[data-power-on] .glass {
+  animation: power-on 520ms var(--ease-out) both;
+}
+
+@keyframes power-on {
+  0% {
+    clip-path: inset(49.5% 0 49.5% 0);
+    filter: brightness(2.4);
+  }
+  30% {
+    clip-path: inset(49% 0 49% 0);
+    filter: brightness(1.8);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+    filter: brightness(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bezel[data-power-on] .glass {
+    animation: none;
+  }
+}
+
+/* ---- States ---- */
+.bezel[data-state='off'] .glass {
+  background: radial-gradient(ellipse 120% 100% at 50% 45%, #1d201c 0%, #121411 70%);
+}
+
+.bezel[data-state='off'] .content {
+  min-height: 6rem;
+}
+
+.bezel[data-state='error'] .glass {
+  outline: 1px solid var(--phosphor-dim);
+  outline-offset: -8px;
+}
+
+/* ---- Text ---- */
+.line {
+  margin: 0;
+  font-family: var(--font-screen);
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.md { font-size: 1.5rem; }   /* 24px */
+.lg { font-size: 2rem; }     /* 32px */
+.xl { font-size: clamp(2.25rem, 1.5rem + 2vw, 3.5rem); }
+.sm { font-size: 1.25rem; }  /* 20px: the smallest VT323 size allowed */
+
+.dim {
+  color: var(--phosphor-dim);
+}
+
+.cursor {
+  display: inline-block;
+  width: 0.55em;
+  height: 0.9em;
+  margin-left: 0.1em;
+  vertical-align: -0.1em;
+  background: currentColor;
+  animation: blink 1s steps(1, end) infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor { animation: none; }
+}

@@ -1,0 +1,48 @@
+/* Bottom-centre on every screen; sits above the mobile sticky bars. */
+.region {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--space-6) + env(safe-area-inset-bottom, 0px));
+  z-index: 60;
+  width: max-content;
+  max-width: calc(100vw - 2 * var(--gutter));
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+/* A small dark readout strip, like a status window on a deck. */
+.toast {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: 0;
+  padding: var(--space-3) var(--space-5) var(--space-3) var(--space-4);
+  border-radius: var(--radius-key);
+  background: var(--panel);
+  color: var(--paper-on-dark);
+  font-weight: 500;
+  box-shadow: var(--shadow-raised-dark), 0 0 0 1px #000, 0 12px 28px -8px rgb(0 0 0 / 0.5);
+  animation: rise var(--dur-state) var(--ease-out);
+}
+
+.led {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--led-lit);
+  box-shadow: var(--led-halo);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    animation: none;
+  }
+}

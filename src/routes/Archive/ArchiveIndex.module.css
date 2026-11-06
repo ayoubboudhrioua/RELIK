@@ -1,0 +1,123 @@
+/* A ruled catalogue ledger on putty-light paper. */
+.wrap {
+  overflow-x: auto;
+  border-radius: var(--radius-plate);
+  background: var(--putty-light);
+  box-shadow: 0 0 0 1px rgb(115 107 89 / 0.4), 0 10px 20px -14px rgb(40 30 10 / 0.5);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table thead th {
+  padding: var(--space-3) var(--space-3);
+  border-bottom: 2px solid var(--ink);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.table td,
+.table tbody th {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--hairline);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.table tbody tr:hover {
+  background: rgb(207 197 176 / 0.35);
+}
+
+.photoCol {
+  width: 72px;
+}
+
+.thumb {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 48px;
+  border-radius: var(--radius-plate);
+  background: var(--putty-deep);
+  box-shadow: inset 0 2px 4px rgb(40 30 10 / 0.25);
+}
+
+.thumb img {
+  max-width: 46px;
+  max-height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+.dymo {
+  font-size: 0.6875rem;
+}
+
+.name {
+  font-weight: 600;
+}
+
+.name a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  text-decoration-thickness: 1px;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  white-space: nowrap;
+}
+
+.lookCol {
+  width: 1%;
+  white-space: nowrap;
+}
+
+.look {
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-key);
+  background: var(--putty);
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+.look:hover {
+  border-color: var(--ink);
+}
+
+@media (max-width: 820px) {
+  .hideNarrow {
+    display: none;
+  }
+
+  .table td,
+  .table tbody th,
+  .table thead th {
+    padding-inline: var(--space-2);
+  }
+
+  .photoCol {
+    width: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Very narrow screens: photo, name and year only. The accession is in
+     the passport, and Quick look stays available in the gallery. */
+  .table thead th:nth-child(2),
+  .table td:nth-child(2),
+  .table thead th:last-child,
+  .table td.lookCol {
+    display: none;
+  }
+}

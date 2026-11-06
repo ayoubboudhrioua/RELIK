@@ -1,0 +1,107 @@
+.dialog {
+  width: min(560px, calc(100vw - 2 * var(--gutter)));
+  max-height: calc(100dvh - 2 * var(--space-6));
+  margin: auto;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-case);
+  background: var(--putty);
+  color: var(--ink);
+  box-shadow: var(--shadow-raised), 0 0 0 1px rgb(115 107 89 / 0.5), 0 30px 60px -20px rgb(0 0 0 / 0.6);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.lg {
+  width: min(880px, calc(100vw - 2 * var(--gutter)));
+}
+
+.dialog[data-tone='graphite'] {
+  background: var(--graphite);
+  color: var(--paper-on-dark);
+  box-shadow: var(--shadow-raised-dark), 0 0 0 1px #000, 0 30px 60px -20px rgb(0 0 0 / 0.7);
+}
+
+.dialog::backdrop {
+  background: rgb(14 15 16 / 0.72);
+  animation: backdrop-in var(--dur-state) var(--ease-out);
+}
+
+/* Opening: the panel rises a few pixels into place (opacity only with reduced motion). */
+.dialog[open] .panel {
+  animation: panel-in 280ms var(--ease-out);
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.985);
+  }
+}
+
+@keyframes backdrop-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialog[open] .panel {
+    animation-name: fade-in;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+}
+
+.panel {
+  position: relative;
+  padding: var(--space-6) clamp(var(--space-5), 4vw, var(--space-7)) var(--space-7);
+}
+
+.screwL { top: 12px; left: 12px; }
+.screwR { top: 12px; right: 12px; }
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.title {
+  font-size: var(--text-xl);
+  line-height: var(--leading-snug);
+  padding-top: var(--space-2);
+}
+
+.close {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--control-line);
+  border-radius: var(--radius-key);
+  background: var(--surface-raised);
+  color: var(--text);
+}
+
+.close:hover {
+  border-color: var(--text);
+}
+
+@media (max-width: 560px) {
+  /* Phones: the dialog becomes a sheet anchored to the bottom. */
+  .dialog {
+    width: 100vw;
+    max-width: none;
+    max-height: 92dvh;
+    margin: auto 0 0;
+    border-radius: var(--radius-case) var(--radius-case) 0 0;
+  }
+}

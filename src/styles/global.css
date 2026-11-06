@@ -1,0 +1,148 @@
+/* Base styles shared by every page. Component styles live next to each component. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scrollbar-color: var(--line) var(--putty-deep);
+}
+
+body {
+  margin: 0;
+  background: var(--putty);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  font-kerning: normal;
+  -webkit-font-smoothing: antialiased;
+  caret-color: var(--signal-edge);
+}
+
+[data-room='dark'] {
+  background-color: var(--surface);
+  color: var(--text);
+  caret-color: var(--amber);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  /* 'anywhere' (not 'break-word') so a very long word also lets grid and
+     flex columns shrink; it only breaks a word when it cannot fit. */
+  overflow-wrap: anywhere;
+  font-family: var(--font-display);
+  font-stretch: 125%;
+  font-weight: 800;
+  line-height: var(--leading-snug);
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+ul[role='list'],
+ol[role='list'] {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* The browser's own "×" in search fields does not match the palette;
+   the Archive has its own Clear filters button. */
+input[type='search']::-webkit-search-cancel-button {
+  display: none;
+}
+
+/* Visible focus everywhere: 2px, high contrast, graphite on putty and amber on dark. */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--signal);
+  color: var(--graphite);
+}
+
+/* Numbers in data line up. */
+table,
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Hidden from sight, still read by screen readers. */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--space-4);
+  top: -100px;
+  z-index: 100;
+  padding: var(--space-3) var(--space-4);
+  background: var(--signal);
+  color: var(--graphite);
+  font-weight: 600;
+  border-radius: var(--radius-key);
+}
+
+.skip-link:focus {
+  top: var(--space-4);
+}
+
+/*
+  Reduced motion is handled where the motion lives: each component's CSS has
+  its own @media (prefers-reduced-motion: reduce) block, and every GSAP
+  animation checks useReducedMotion(). No global kill switch here, because it
+  would also make every property (even focus outlines) transition.
+*/
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

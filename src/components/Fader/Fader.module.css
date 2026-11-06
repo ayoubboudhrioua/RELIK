@@ -1,0 +1,262 @@
+/*
+  --track: length of the fader travel.
+  --cap: size of the fader cap along the travel. The scale is padded by half
+  a cap at each end so every word lines up with a stop of the cap.
+*/
+.fader {
+  --track: 200px;
+  --cap: 22px;
+  --cap-across: 40px;
+
+  display: grid;
+  gap: var(--space-3);
+  color: var(--text);
+}
+
+.label {
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+/* Small VFD readout showing the current word. */
+.readout {
+  justify-self: start;
+  min-width: 9ch;
+  margin: 0;
+  padding: 2px var(--space-3);
+  border-radius: var(--radius-plate);
+  background: var(--crt);
+  color: var(--vfd);
+  box-shadow: inset 0 1px 3px rgb(0 0 0 / 0.9), 0 0 0 1px rgb(0 0 0 / 0.5);
+  font-family: var(--font-screen);
+  font-size: 1.375rem; /* 22px */
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+:global(html[data-crt='on']) .readout {
+  text-shadow: 0 0 6px var(--vfd-glow);
+}
+
+.bed {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.scale {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.scale li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.tick {
+  width: 10px;
+  height: 1px;
+  background: var(--control-line);
+}
+
+.current {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.current .tick {
+  height: 2px;
+  background: var(--text);
+}
+
+/* ---- Vertical: the input is rotated so the low end sits at the bottom ---- */
+.vertical .bed {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+.vertical .scale {
+  flex-direction: column-reverse;
+  height: var(--track);
+  padding-block: calc(var(--cap) / 2);
+}
+
+.vertical .scale li {
+  height: 0;
+}
+
+.vertical .slot {
+  position: relative;
+  flex: none;
+  width: var(--cap-across);
+  height: var(--track);
+}
+
+.vertical .input {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--track);
+  transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+/* ---- Horizontal ---- */
+.horizontal .bed {
+  flex-direction: column-reverse;
+}
+
+.horizontal .scale {
+  padding-inline: calc(var(--cap) / 2);
+}
+
+.horizontal .scale li {
+  width: 0;
+  flex-direction: column;
+  justify-content: flex-start;
+  white-space: nowrap;
+}
+
+/* The end words hang inward so they never spill past the fader. */
+.horizontal .scale li:first-child {
+  align-items: flex-start;
+}
+
+.horizontal .scale li:last-child {
+  align-items: flex-end;
+}
+
+.horizontal .tick {
+  width: 1px;
+  height: 8px;
+}
+
+.horizontal .current .tick {
+  width: 2px;
+  height: 8px;
+}
+
+.horizontal .slot {
+  width: 100%;
+}
+
+.horizontal .input {
+  width: 100%;
+}
+
+/* ---- The range input itself ---- */
+.input {
+  height: 44px;
+  margin: 0;
+  background: transparent;
+  cursor: grab;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.input:active {
+  cursor: grabbing;
+}
+
+/* The slot the cap slides in. */
+.input::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 3px;
+  background: #121314;
+  box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.9), 0 1px 0 rgb(255 255 255 / 0.35);
+}
+
+.input::-moz-range-track {
+  height: 6px;
+  border-radius: 3px;
+  background: #121314;
+  box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.9), 0 1px 0 rgb(255 255 255 / 0.35);
+}
+
+/* The fader cap: graphite with a pale index line across it. */
+.input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: var(--cap);
+  height: var(--cap-across);
+  margin-top: calc((6px - var(--cap-across)) / 2);
+  border: 1px solid #000;
+  border-radius: 3px;
+  background:
+    linear-gradient(90deg, transparent 9px, var(--putty-light) 9px 12px, transparent 12px),
+    linear-gradient(90deg, #2b2c2f, #4a4b50 45%, #2b2c2f);
+  box-shadow: 0 3px 5px rgb(0 0 0 / 0.5), inset 0 1px 0 rgb(255 255 255 / 0.2);
+}
+
+.input::-moz-range-thumb {
+  width: var(--cap);
+  height: var(--cap-across);
+  border: 1px solid #000;
+  border-radius: 3px;
+  background:
+    linear-gradient(90deg, transparent 9px, var(--putty-light) 9px 12px, transparent 12px),
+    linear-gradient(90deg, #2b2c2f, #4a4b50 45%, #2b2c2f);
+  box-shadow: 0 3px 5px rgb(0 0 0 / 0.5), inset 0 1px 0 rgb(255 255 255 / 0.2);
+}
+
+/* ---- Hover: the index line turns signal ---- */
+.input:hover::-webkit-slider-thumb,
+.fader[data-demo='hover'] .input::-webkit-slider-thumb {
+  background:
+    linear-gradient(90deg, transparent 9px, var(--signal) 9px 12px, transparent 12px),
+    linear-gradient(90deg, #2b2c2f, #55565b 45%, #2b2c2f);
+}
+
+.input:hover::-moz-range-thumb,
+.fader[data-demo='hover'] .input::-moz-range-thumb {
+  background:
+    linear-gradient(90deg, transparent 9px, var(--signal) 9px 12px, transparent 12px),
+    linear-gradient(90deg, #2b2c2f, #55565b 45%, #2b2c2f);
+}
+
+/* ---- Focus: ring around the cap ---- */
+.input:focus-visible {
+  outline: none;
+}
+
+.input:focus-visible::-webkit-slider-thumb,
+.fader[data-demo='focus'] .input::-webkit-slider-thumb {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.input:focus-visible::-moz-range-thumb,
+.fader[data-demo='focus'] .input::-moz-range-thumb {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+/* ---- Disabled ---- */
+.fader[data-disabled] {
+  color: var(--text-muted);
+}
+
+.fader[data-disabled] .input {
+  cursor: not-allowed;
+}
+
+.fader[data-disabled] .input::-webkit-slider-thumb {
+  background: linear-gradient(90deg, #5a5b5f, #6b6c70 45%, #5a5b5f);
+  box-shadow: none;
+}
+
+.fader[data-disabled] .input::-moz-range-thumb {
+  background: linear-gradient(90deg, #5a5b5f, #6b6c70 45%, #5a5b5f);
+  box-shadow: none;
+}
+
+.fader[data-disabled] .readout {
+  color: var(--muted-on-dark);
+}

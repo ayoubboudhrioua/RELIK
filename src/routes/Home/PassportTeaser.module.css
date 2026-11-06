@@ -1,0 +1,169 @@
+.room {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--space-9) var(--gutter);
+}
+
+/* An open manual: two paper pages with a shadow in the gutter. */
+.spread {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  border-radius: var(--radius-plate);
+  background: var(--putty-light);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.6) inset,
+    0 18px 30px -18px rgb(40 30 10 / 0.45),
+    0 0 0 1px rgb(115 107 89 / 0.35);
+}
+
+.leftPage,
+.rightPage {
+  margin: 0;
+  padding: clamp(var(--space-5), 4vw, var(--space-8));
+}
+
+.leftPage {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: var(--space-5);
+  background: linear-gradient(90deg, transparent 88%, rgb(40 30 10 / 0.1) 100%);
+  border-right: 1px solid var(--hairline);
+}
+
+.rightPage {
+  display: grid;
+  align-content: start;
+  gap: var(--space-4);
+  background: linear-gradient(270deg, transparent 90%, rgb(40 30 10 / 0.08) 100%);
+}
+
+/* The figure sits on a plate drawn with the manual's thin grid. */
+.plate {
+  display: grid;
+  place-items: center;
+  min-height: 320px;
+  padding: var(--space-6);
+  border: 1px solid var(--hairline);
+  background:
+    linear-gradient(var(--hairline) 1px, transparent 1px) 0 0 / 100% 32px,
+    linear-gradient(90deg, var(--hairline) 1px, transparent 1px) 0 0 / 32px 100%;
+  background-color: var(--putty-light);
+}
+
+.figureImage {
+  width: auto;
+  max-width: 82%;
+  max-height: 340px;
+  filter: drop-shadow(0 12px 10px rgb(30 20 0 / 0.28));
+}
+
+.caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+}
+
+.fig {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.title {
+  font-size: var(--text-3xl);
+  line-height: var(--leading-tight);
+}
+
+.text {
+  max-width: 48ch;
+  color: var(--ink-muted);
+  font-size: var(--text-lg);
+}
+
+.sheetTitle {
+  margin-top: var(--space-4);
+  font-family: var(--font-mono);
+  font-stretch: 100%;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.sheet {
+  margin: 0;
+  border-top: 2px solid var(--ink);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 9rem minmax(0, 1fr);
+  gap: var(--space-4);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.row dt {
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+.row dd {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+  color: var(--ink);
+}
+
+.fields li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.fields li::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border: 1px solid var(--ink);
+  border-radius: 1px;
+}
+
+.cta {
+  justify-self: start;
+  margin-top: var(--space-5);
+}
+
+@media (max-width: 900px) {
+  .spread {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .leftPage {
+    border-right: 0;
+    border-bottom: 1px solid var(--hairline);
+    background: none;
+  }
+
+  .rightPage {
+    background: none;
+  }
+
+  .plate {
+    min-height: 240px;
+  }
+
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+}

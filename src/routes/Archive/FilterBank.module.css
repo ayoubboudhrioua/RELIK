@@ -1,0 +1,55 @@
+.bank {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1.3fr) minmax(11rem, 0.7fr);
+  gap: var(--space-5) var(--space-7);
+  align-items: start;
+}
+
+.group {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.legend {
+  margin-bottom: var(--space-2);
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+/* Switches flow in columns so long French labels still fit. */
+.switches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));
+  column-gap: var(--space-4);
+}
+
+.sort {
+  min-width: 0;
+}
+
+@media (max-width: 1100px) {
+  .bank {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .group:first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Inside the phone sheet: one column. */
+@media (max-width: 820px) {
+  .bank {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .switches {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

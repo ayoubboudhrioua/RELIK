@@ -1,0 +1,12 @@
+/* Undo the demo styling that ships with ScrambledText: inherit the screen's type. */
+.decode.decode {
+  display: inline-block;
+  max-width: none;
+  margin: 0;
+  font: inherit;
+  letter-spacing: inherit;
+}
+
+.decode p {
+  margin: 0;
+}

@@ -1,0 +1,348 @@
+.room {
+  background: var(--graphite);
+  color: var(--paper-on-dark);
+  border-top: 1px solid #000;
+}
+
+/* ScrollTrigger wraps the pinned room in a spacer; give it the same dark ground. */
+:global(.pin-spacer):has(> .room) {
+  background: var(--graphite);
+}
+
+.stage {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--space-8) var(--gutter);
+}
+
+.header {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  align-items: end;
+  gap: var(--space-3) var(--space-7);
+}
+
+.title {
+  font-size: var(--text-3xl);
+  line-height: var(--leading-tight);
+}
+
+.intro {
+  max-width: 42ch;
+  color: var(--muted-on-dark);
+}
+
+/* ---- Transport bar: reels, track keys, counter ---- */
+.transport {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4) var(--space-5);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-case);
+  background: var(--panel);
+  box-shadow: var(--shadow-raised-dark), 0 0 0 1px #000;
+}
+
+.reels {
+  flex: none;
+  width: 120px;
+  height: auto;
+}
+
+.cassette {
+  fill: #121314;
+  stroke: #3a3b3f;
+}
+
+.cassetteWindow {
+  fill: #050605;
+  stroke: #2b2c2f;
+}
+
+.tape {
+  stroke: #4a3a26;
+  stroke-width: 3;
+}
+
+.reel {
+  fill: #3a3022;
+  stroke: #5c4a33;
+}
+
+.hub {
+  fill: var(--putty-deep);
+}
+
+.spoke {
+  fill: var(--putty-deep);
+}
+
+.tracks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.trackKey {
+  min-height: 56px;
+  padding-right: var(--space-5);
+}
+
+.trackKey > span:last-child {
+  display: grid;
+  line-height: 1.15;
+}
+
+.trackShort {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.trackPhase {
+  font-weight: 500;
+}
+
+.counter {
+  margin-left: auto;
+}
+
+/* A small VFD readout of the current track, shown on phones. */
+.nowPlaying {
+  display: none;
+  margin: 0;
+  padding: 2px var(--space-3);
+  border-radius: var(--radius-plate);
+  background: var(--crt);
+  color: var(--vfd);
+  font-family: var(--font-screen);
+  font-size: 1.375rem;
+  line-height: 1.2;
+  text-transform: uppercase;
+  box-shadow: inset 0 1px 3px rgb(0 0 0 / 0.9);
+}
+
+/* ---- Chapters ---- */
+.chapters {
+  margin: 0;
+}
+
+.chapter {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--space-6) var(--space-8);
+  align-items: center;
+}
+
+.text {
+  display: grid;
+  gap: var(--space-3);
+  align-content: center;
+}
+
+.track {
+  color: var(--amber);
+  font-family: var(--font-screen);
+  font-size: 1.5rem;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.phase {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--muted-on-dark);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.rule {
+  width: 1px;
+  height: 1em;
+  background: var(--line-on-dark);
+}
+
+.chapterTitle {
+  font-size: var(--text-2xl);
+  line-height: var(--leading-snug);
+}
+
+.body {
+  max-width: 52ch;
+  color: var(--paper-on-dark);
+}
+
+/* The photo window: a recessed, lit bay on the deck. */
+.figure {
+  position: relative;
+  margin: 0;
+}
+
+.window {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: var(--space-5);
+  height: clamp(220px, 38vh, 420px);
+  padding: var(--space-6);
+  overflow: hidden;
+  border-radius: var(--radius-plate);
+  background:
+    radial-gradient(ellipse 60% 70% at 50% -10%, rgb(255 236 200 / 0.14), transparent 70%),
+    #121315;
+  box-shadow: var(--shadow-inset-dark), 0 0 0 1px #000;
+}
+
+.cutout {
+  min-width: 0;
+  max-width: 46%;
+  max-height: 100%;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 14px 12px rgb(0 0 0 / 0.6));
+}
+
+.window:has(.cutout:only-child) .cutout {
+  max-width: 70%;
+}
+
+.photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Labels sit under the photo window, like museum captions. */
+.notes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-3);
+  margin: var(--space-4) 0 0;
+}
+
+/* ===== Pinned (wide screens, motion allowed) ===== */
+.pinned .stage {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: var(--space-5);
+  height: 100vh;
+  height: 100svh;
+  padding-block: var(--space-6);
+}
+
+.pinned .chapters {
+  display: grid;
+  min-height: 0;
+}
+
+/* All four chapters share one cell; only the active one shows.
+   Opacity only (no visibility: hidden) so screen readers still read
+   all four chapters in order. */
+.pinned .chapter {
+  grid-area: 1 / 1;
+  opacity: 0;
+  transition: opacity var(--dur-state) var(--ease-out);
+}
+
+.pinned .chapter[data-active] {
+  opacity: 1;
+  transition-duration: var(--dur-reveal);
+}
+
+.pinned .transport {
+  order: 3;
+}
+
+/* ===== Stacked (phones, or reduced motion) ===== */
+.stacked .transport {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  margin: var(--space-6) 0 var(--space-7);
+}
+
+.stacked .chapters {
+  display: grid;
+  gap: var(--space-9);
+}
+
+.stacked .chapter {
+  scroll-margin-top: 120px;
+}
+
+@media (max-width: 820px) {
+  .header,
+  .chapter {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .reels {
+    display: none;
+  }
+
+  .transport {
+    padding: var(--space-3) var(--gutter);
+    gap: var(--space-2) var(--space-3);
+  }
+
+  /* Phones: the sticky bar runs edge to edge. */
+  .stacked .transport {
+    margin-inline: calc(var(--gutter) * -1);
+    border-radius: 0;
+  }
+
+  .tracks {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-2);
+    width: 100%;
+  }
+
+  .trackKey {
+    min-height: 48px;
+    padding: var(--space-2);
+    gap: var(--space-2);
+  }
+
+  /* On phones the key shows the short track name; the phase stays in the
+     accessible name and shows in the "now playing" readout. */
+  .trackKey > span:nth-child(2) {
+    display: none;
+  }
+
+  .trackPhase {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .nowPlaying {
+    display: block;
+  }
+
+  .counter {
+    display: none;
+  }
+
+  .window {
+    height: 280px;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chapter {
+    transition: none;
+  }
+}

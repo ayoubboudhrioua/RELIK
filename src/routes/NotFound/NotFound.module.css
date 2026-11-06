@@ -1,0 +1,22 @@
+.page {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: var(--space-8) var(--gutter);
+}
+
+.screen {
+  max-width: 22rem;
+  margin-bottom: var(--space-5);
+}
+
+.text {
+  margin-bottom: var(--space-4);
+  color: var(--text-muted);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 600;
+}

@@ -1,0 +1,49 @@
+.screw {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #f4f1ea 0%, #b9b2a2 45%, #7a7365 100%);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.5),
+    inset 0 -1px 1px rgb(0 0 0 / 0.35),
+    0 0 0 1px rgb(60 50 30 / 0.25);
+}
+
+[data-room='dark'] .screw {
+  background: radial-gradient(circle at 35% 30%, #8d8e92 0%, var(--led-off-dark) 50%, #2a2b2e 100%);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.06),
+    inset 0 -1px 1px rgb(0 0 0 / 0.6),
+    0 0 0 1px rgb(0 0 0 / 0.5);
+}
+
+.slot {
+  position: absolute;
+  left: 1.5px;
+  right: 1.5px;
+  top: 4.5px;
+  height: 2px;
+  border-radius: 1px;
+  background: rgb(40 32 20 / 0.7);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.35);
+}
+
+[data-room='dark'] .slot {
+  background: rgb(0 0 0 / 0.85);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.08);
+}
+
+/* Back to the light screw on a putty panel inside a dark room. */
+[data-room='light'] .screw {
+  background: radial-gradient(circle at 35% 30%, #f4f1ea 0%, #b9b2a2 45%, #7a7365 100%);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.5),
+    inset 0 -1px 1px rgb(0 0 0 / 0.35),
+    0 0 0 1px rgb(60 50 30 / 0.25);
+}
+
+[data-room='light'] .slot {
+  background: rgb(40 32 20 / 0.7);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.35);
+}

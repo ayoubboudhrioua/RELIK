@@ -1,0 +1,36 @@
+.tape {
+  display: inline-block;
+  padding: 0.2em 0.7em 0.15em;
+  border-radius: var(--radius-plate);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  /* Short labels stay on one line; long (translated) ones wrap instead of
+     pushing past the screen edge. */
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  /* The tape is slightly glossy: a lighter band near the top. */
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.12),
+    inset 0 -1px 0 rgb(0 0 0 / 0.5),
+    0 1px 1.5px rgb(0 0 0 / 0.35);
+}
+
+.black {
+  background: linear-gradient(180deg, #2a2a2a 0%, var(--dymo-tape) 38%, #0c0c0c 100%);
+  color: var(--dymo-ink);
+  /* Embossed letters: a dark shadow below, a pale edge above. */
+  text-shadow:
+    0 1px 0 rgb(0 0 0 / 0.9),
+    0 -1px 0 rgb(255 255 255 / 0.18);
+}
+
+/* Orange tape with graphite letters (graphite on signal = 5.41:1). */
+.signal {
+  background: linear-gradient(180deg, #ff7a47 0%, var(--signal) 40%, #e94d14 100%);
+  color: var(--graphite);
+  text-shadow: 0 1px 0 rgb(255 255 255 / 0.3);
+}
