@@ -8,4 +8,4 @@ dist/
 .impeccable/
 site/test-results/
 site/playwright-report/
-playwright.config.js
+
