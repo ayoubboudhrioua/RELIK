@@ -13,7 +13,7 @@ export const en = {
   nav: {
     label: 'Main',
     plate: 'Archive terminal',
-    home: 'RELIK home',
+    homeSuffix: ', home',
     links: [
       { to: '/archive', label: 'Archive' },
       { to: '/lab', label: 'Decision Lab' },
@@ -71,12 +71,16 @@ export const en = {
     hero: {
       headline: ['Technology fades.', 'Its stories shouldn’t.'],
       lead: 'An interactive archive of forgotten devices, physical media, and the memories they carry.',
-      bootLines: ['RELIK ARCHIVE TERMINAL', 'MOUNTING COLLECTION', 'OBJECTS ON FILE: {count}', 'READY'],
+      // Typed during the first start-up of the session, then folded into the status line.
+      bootLines: ['RELIK ARCHIVE TERMINAL', 'MOUNTING COLLECTION', 'OBJECTS ON FILE: {count}'],
+      statusLine: 'RLK ARCHIVE · {count} OBJECTS · READY',
+      searchLabel: 'Search the archive',
+      searchHint: 'to search',
       skipBoot: 'Skip start-up',
       ctaArchive: 'Explore the Archive',
       ctaLab: 'Enter the Decision Lab',
       counterLabel: 'Objects on file',
-      searchSubmit: 'Search',
+      searchSubmit: 'Enter',
       searchTry: 'Try',
       bayCaption: 'On the bench today',
       vuLeft: 'L',

@@ -1,3 +1,4 @@
+import { Backdrop } from '../../components/Backdrop/Backdrop.jsx'
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { gsap } from 'gsap'
@@ -132,6 +133,7 @@ export function Archive() {
     <div className={styles.page}>
       {/* ---- Header room: title and the CRT search ---- */}
       <section className={styles.header} data-room="dark" aria-labelledby="page-title">
+        <Backdrop />
         <div className={styles.headerInner}>
           <div className={styles.titleBlock}>
             <h1 id="page-title" className={styles.title}>
@@ -280,7 +282,7 @@ export function Archive() {
         ) : settings.view === 'index' ? (
           <ArchiveIndex objects={results} onQuickLook={setLookAt} />
         ) : (
-          <ul role="list" className={styles.gallery}>
+          <ul role="list" className={styles.gallery} data-stagger="">
             {results.map((object) => (
               <li key={object.id}>
                 <SpecimenBay

@@ -205,7 +205,7 @@ function Rack() {
                 </button>
               </div>
             ) : (
-              <ul role="list" className={styles.spines}>
+              <ul role="list" className={styles.spines} data-stagger="">
                 {shown.map((item, index) => (
                   <li key={item.id} className={styles.spine} data-style={SPINE_STYLES[index % SPINE_STYLES.length]}>
                     <span className={styles.band} aria-hidden="true" />

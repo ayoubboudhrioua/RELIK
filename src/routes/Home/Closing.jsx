@@ -1,3 +1,4 @@
+import { Backdrop } from '../../components/Backdrop/Backdrop.jsx'
 import { TransportKey } from '../../components/TransportKey/TransportKey.jsx'
 import { mission } from '../../data/objects.js'
 import { en } from '../../content/en.js'
@@ -17,6 +18,7 @@ export function Closing() {
       </section>
 
       <section className={styles.closing} data-room="dark" aria-labelledby="closing-title">
+        <Backdrop />
         <div className={styles.closingInner}>
           <h2 id="closing-title" className={styles.line}>
             {t.closing.line}

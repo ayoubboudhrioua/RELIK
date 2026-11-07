@@ -1,3 +1,4 @@
+import { Backdrop } from '../../components/Backdrop/Backdrop.jsx'
 import { Screen, ScreenLine, Cursor } from '../../components/Screen/Screen.jsx'
 import { DymoLabel } from '../../components/DymoLabel/DymoLabel.jsx'
 import { Screw } from '../../components/Screw/Screw.jsx'
@@ -12,6 +13,7 @@ export function AuthLayout({ title, prompt, children, footer }) {
   usePageTitle(title)
   return (
     <div className={styles.room} data-room="dark">
+      <Backdrop />
       <div className={styles.terminal}>
         <Screen className={styles.screen} label={en.auth.screenTitle}>
           <ScreenLine size="sm" dim>

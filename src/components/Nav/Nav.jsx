@@ -55,14 +55,13 @@ export function Nav({ user = null, onSignOut }) {
   return (
     <header className={styles.header} data-room="dark">
       <div className={styles.inner}>
-        <Link to="/" className={styles.logo} aria-label={t.home}>
+        {/* The link is named by its visible words ("RELIK", "Archive terminal")
+            plus a hidden "home", so the spoken name contains what is on screen. */}
+        <Link to="/" className={styles.logo}>
           <span className={styles.power} aria-hidden="true" />
-          <span className={styles.wordmark} aria-hidden="true">
-            {en.site.name}
-          </span>
-          <span className={styles.plate} aria-hidden="true">
-            {t.plate}
-          </span>
+          <span className={styles.wordmark}>{en.site.name}</span>
+          <span className={styles.plate}>{t.plate}</span>
+          <span className="visually-hidden">{t.homeSuffix}</span>
         </Link>
 
         <nav aria-label={t.label} className={styles.desktopNav}>

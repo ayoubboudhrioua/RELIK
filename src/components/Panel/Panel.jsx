@@ -1,10 +1,12 @@
 import { Screw } from '../Screw/Screw.jsx'
+import { Backdrop } from '../Backdrop/Backdrop.jsx'
 import styles from './Panel.module.css'
 
 // An equipment faceplate: the container for one section of a page.
 // - tone: 'putty' (light casing) or 'graphite' (dark casing)
 // - plate: optional engraved model plate, e.g. "RLK-200 · Archive"
 // - title: the section heading; titleAs sets its level (h2 by default)
+// - backdrop: show the animated glow behind the content (graphite panels only)
 export function Panel({
   as: Tag = 'section',
   tone = 'putty',
@@ -12,6 +14,7 @@ export function Panel({
   title,
   titleAs: Title = 'h2',
   titleId,
+  backdrop = false,
   children,
   className = '',
   ...rest
@@ -23,6 +26,7 @@ export function Panel({
       aria-labelledby={title && titleId ? titleId : undefined}
       {...rest}
     >
+      {backdrop && <Backdrop />}
       <Screw className={styles.screwTL} angle={18} />
       <Screw className={styles.screwTR} angle={-40} />
       <Screw className={styles.screwBL} angle={72} />

@@ -1,3 +1,4 @@
+import { Backdrop } from '../../components/Backdrop/Backdrop.jsx'
 import { Link, useParams } from 'react-router-dom'
 import { SpecimenBay } from '../../components/SpecimenBay/SpecimenBay.jsx'
 import { DymoLabel } from '../../components/DymoLabel/DymoLabel.jsx'
@@ -56,8 +57,9 @@ function TitleBand({ object }) {
 
   return (
     <section className={styles.band} data-room="dark" aria-labelledby="page-title">
+      <Backdrop />
       <div className={styles.bandInner}>
-        <SpecimenBay object={object} tone="graphite" size="l" showStory={false} headingAs="p" priority className={styles.bay} />
+        <SpecimenBay object={object} tone="graphite" size="l" showStory={false} headingAs="p" priority className={styles.bay} data-parallax="" />
         <div className={styles.identity}>
           <Link to="/archive" className={styles.back}>
             {t.backToArchive}
@@ -185,7 +187,7 @@ function FullPassport({ object, passport }) {
         <div className={styles.pages}>
           <PassportSection id="specifications" number={1} title={t.specifications}>
             <div className={styles.split}>
-              <dl className={styles.sheet}>
+              <dl className={styles.sheet} data-tick="">
                 {passport.specifications.map(([label, value]) => (
                   <div key={label}>
                     <dt>{label}</dt>
@@ -347,7 +349,7 @@ function PartialPassport({ object }) {
           </PassportSection>
 
           <PassportSection id="specifications" number={2} title={t.specifications}>
-            <dl className={styles.sheet}>
+            <dl className={styles.sheet} data-tick="">
               <div>
                 <dt>{t.accession}</dt>
                 <dd>{object.accession}</dd>

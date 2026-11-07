@@ -1,3 +1,4 @@
+import { Backdrop } from '../../components/Backdrop/Backdrop.jsx'
 import { TransportKey } from '../../components/TransportKey/TransportKey.jsx'
 import { LedMeter } from '../../components/LedMeter/LedMeter.jsx'
 import { rankFutures, FUTURES } from '../../lab/model.js'
@@ -17,6 +18,7 @@ export function LabTeaser() {
 
   return (
     <section className={styles.room} data-room="dark" aria-labelledby="lab-teaser-title">
+      <Backdrop />
       <div className={styles.inner}>
         <div className={styles.copy}>
           <h2 id="lab-teaser-title" className={styles.title}>

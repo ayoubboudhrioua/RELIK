@@ -1,15 +1,14 @@
 import { useEffect, useRef } from 'react'
 import { ReactLenis, useLenis } from 'lenis/react'
 import 'lenis/dist/lenis.css'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useLocation } from 'react-router-dom'
 import { useReducedMotion } from '../hooks/useReducedMotion.js'
+import { gsap, ScrollTrigger } from './gsap.js'
 
-gsap.registerPlugin(ScrollTrigger)
-
-// Smooth scrolling with Lenis, driven by GSAP's ticker so ScrollTrigger
-// animations and the scroll position always agree.
+// The one place where Lenis (smooth scrolling) and GSAP are connected:
+// - GSAP's ticker drives Lenis, frame by frame (lagSmoothing off, so they never drift);
+// - every Lenis scroll updates ScrollTrigger (see LenisSync);
+// - ScrollTrigger measures again once the fonts and images have loaded.
 // With reduced motion, Lenis is not used: the browser scrolls normally.
 export function SmoothScroll({ children }) {
   const reducedMotion = useReducedMotion()
@@ -25,6 +24,8 @@ export function SmoothScroll({ children }) {
     gsap.ticker.lagSmoothing(0)
     return () => gsap.ticker.remove(update)
   }, [reducedMotion])
+
+  useRefreshWhenLoaded()
 
   if (reducedMotion) {
     return (
@@ -54,6 +55,17 @@ function LenisSync() {
   }, [pathname, lenis])
 
   return null
+}
+
+// Fonts and late images change the page's height: measure the triggers again.
+function useRefreshWhenLoaded() {
+  useEffect(() => {
+    const refresh = () => ScrollTrigger.refresh()
+    document.fonts?.ready.then(refresh)
+    if (document.readyState === 'complete') refresh()
+    else window.addEventListener('load', refresh, { once: true })
+    return () => window.removeEventListener('load', refresh)
+  }, [])
 }
 
 // Without Lenis: start each page at the top.

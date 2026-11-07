@@ -33,7 +33,7 @@ export function Screen({
       role={label && !live ? 'group' : undefined}
       {...rest}
     >
-      <div className={styles.glass}>
+      <div className={styles.glass} data-glass="">
         {backdrop}
         <div className={`${styles.content} ${contentClassName}`} {...liveProps} aria-busy={state === 'loading' || undefined}>
           {state === 'off' ? <span className="visually-hidden">Screen off</span> : children}

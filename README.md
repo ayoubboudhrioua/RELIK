@@ -59,4 +59,3 @@ React, Vite, React Router, CSS Modules, GSAP, Lenis, Vitest and Playwright.
 Photographs come from Wikimedia Commons. Authors and licences are listed on the
 `/credits` page of the site.
 
-

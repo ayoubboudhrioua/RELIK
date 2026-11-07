@@ -52,6 +52,8 @@ const STROKED = {
   ),
   plus: <path d="M12 5v14M5 12h14" />,
   arrow: <path d="M5 12h14m-5-5 5 5-5 5" />,
+  // The return key legend (↵), drawn so it does not depend on a font.
+  enter: <path d="M19 5v6.5a3 3 0 0 1-3 3H5.5m0 0 4-4m-4 4 4 4" />,
 }
 
 // A cassette reel, used for loading states (it turns).
