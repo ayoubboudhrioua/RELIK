@@ -1,6 +1,6 @@
 // All facts about the objects come from one file: docs/relik-seed-data.json.
 // This module reads it once and adds what the interface needs
-// (alt text, period, passport details) so components never touch the JSON.
+// (alt text, period, Logbook details) so components never touch the JSON.
 import seed from './relik-seed-data.json'
 import { en } from '../content/en.js'
 
@@ -40,11 +40,11 @@ export const walkmanStory = seed.walkmanStory.map((chapter) => ({
   photoAlt: chapter.photo ? en.objectAlt[chapter.photo] : undefined,
 }))
 
-// Only the Walkman has a full passport in the seed data.
+// Only the Walkman has a full Logbook in the seed data.
 // Every other object shows what the seed has (story, condition, year, maker).
-export function getPassport(id) {
+export function getLogbook(id) {
   if (id !== 'walkman-tps-l2') return null
-  const p = seed.walkmanPassport
+  const p = seed.walkmanLogbook
   return {
     ...p,
     related: p.related.map(getObject).filter(Boolean),

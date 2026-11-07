@@ -12,7 +12,6 @@ export const en = {
 
   nav: {
     label: 'Main',
-    plate: 'Archive terminal',
     homeSuffix: ', home',
     links: [
       { to: '/archive', label: 'Archive' },
@@ -31,8 +30,6 @@ export const en = {
     tagline: 'Technology never truly disappears.',
     credits: 'Photo credits',
     sampleNote: 'Sample data for a student prototype. Photographs from Wikimedia Commons.',
-    course:
-      'Projet Web, SUP’COM, Université de Carthage, 2026/2027. Groupe 2: Ayoub Boudhrioua and Mohamed Amine Elghzel. Supervisor: Dr. Maroua Nouioua.',
     links: [
       { to: '/archive', label: 'Archive' },
       { to: '/lab', label: 'Decision Lab' },
@@ -73,7 +70,7 @@ export const en = {
       lead: 'An interactive archive of forgotten devices, physical media, and the memories they carry.',
       // Typed during the first start-up of the session, then folded into the status line.
       bootLines: ['RELIK ARCHIVE TERMINAL', 'MOUNTING COLLECTION', 'OBJECTS ON FILE: {count}'],
-      statusLine: 'RLK ARCHIVE · {count} OBJECTS · READY',
+      statusLine: 'THE ARCHIVE · {count} OBJECTS ',
       searchLabel: 'Search the archive',
       searchHint: 'to search',
       skipBoot: 'Skip start-up',
@@ -81,8 +78,9 @@ export const en = {
       ctaLab: 'Enter the Decision Lab',
       counterLabel: 'Objects on file',
       searchSubmit: 'Enter',
-      searchTry: 'Try',
-      bayCaption: 'On the bench today',
+      previewCycle: 'CH {n} / {total}',
+      previewMatches: '{count} on file · top match',
+      previewNone: 'No match on file',
       vuLeft: 'L',
       vuRight: 'R',
       screenLabel: 'Archive terminal screen',
@@ -91,7 +89,7 @@ export const en = {
     shaped: {
       title: 'Objects that shaped us',
       intro: 'Six things that changed how people listened, played, worked and kept their memories.',
-      openPassport: 'Open passport',
+      openLogbook: 'Open Logbook',
     },
     story: {
       title: 'A story worth preserving',
@@ -118,14 +116,13 @@ export const en = {
         ['photographs/walkman-teardown.webp'],
       ],
     },
-    passportTeaser: {
-      title: 'Every object gets a passport',
-      text: 'A passport records what an object is, how it was used, what state it is in and what was repaired, so its history travels with it.',
-      cta: 'Open the Walkman passport',
+    LogbookTeaser: {
+      title: 'Every object gets a Logbook',
+      text: 'A Logbook records what an object is, how it was used, what state it is in and what was repaired, so its history travels with it.',
+      cta: 'Open the Walkman Logbook',
       fields: ['Specifications', 'Historical context', 'Original uses', 'Condition', 'Repair log', 'Timeline'],
-      figure: 'Fig. 1',
       sheetTitle: 'Specification sheet',
-      sectionsTitle: 'What the passport records',
+      sectionsTitle: 'What the Logbook records',
       specRows: ['Model', 'Released', 'Format', 'Outputs'],
     },
     labTeaser: {
@@ -177,7 +174,7 @@ export const en = {
     showResults: { one: 'Show {count} object', other: 'Show {count} objects' },
     featuredTitle: 'Before the web',
     quickLook: 'Quick look',
-    openPassport: 'Open passport',
+    openLogbook: 'Open Logbook',
     emptyTitle: 'Nothing on file matches',
     emptyText: 'Try a shorter word, another category, or one of these:',
     emptySuggestions: ['Walkman', 'Floppy', 'Camera', 'Nokia'],
@@ -193,9 +190,9 @@ export const en = {
     viewLabel: 'Display',
   },
 
-  passport: {
-    pageTitleSuffix: 'Device passport',
-    plate: 'Device passport',
+  Logbook: {
+    pageTitleSuffix: 'Device Logbook',
+    plate: 'Device Logbook',
     specifications: 'Specifications',
     context: 'Historical context',
     originalUses: 'Original uses',
@@ -226,7 +223,7 @@ export const en = {
     removedToast: 'Removed from your collection.',
     notFoundTitle: 'No object with that accession',
     notFoundText: 'It may have been moved. Search the archive instead.',
-    partialNote: 'This passport shows what the archive has so far. Only the Walkman TPS-L2 has a complete sample passport.',
+    partialNote: 'This Logbook shows what the archive has so far. Only the Walkman TPS-L2 has a complete sample Logbook.',
     maker: 'Maker',
     year: 'Year',
     category: 'Category',
@@ -296,7 +293,7 @@ export const en = {
   collection: {
     pageTitle: 'My collection',
     title: 'My collection',
-    intro: 'Your rack of objects and their passports. Stored in this browser only.',
+    intro: 'Your rack of objects and their Logbooks. Stored in this browser only.',
     gateTitle: 'Sign in to open your collection',
     gateText: 'Your collection is kept in this browser under a simulated account.',
     gateCta: 'Sign in',
@@ -308,7 +305,7 @@ export const en = {
     allStatuses: 'All',
     statuses: ['In use', 'Stored', 'Needs repair', 'Preserved'],
     add: 'Add a device',
-    edit: 'Edit passport',
+    edit: 'Edit Logbook',
     remove: 'Remove',
     removeConfirm: 'Remove {name} from your collection?',
     removeConfirmYes: 'Remove it',
@@ -317,13 +314,13 @@ export const en = {
     emptyArchive: 'Browse the Archive',
     noMatch: 'No objects match. Clear the search or choose another status.',
     added: 'Added to your collection.',
-    updated: 'Passport updated.',
+    updated: 'Logbook updated.',
     removed: 'Removed from your collection.',
     total: 'Objects',
     timelineEmpty: 'Add a year to an object to place it on the timeline.',
-    openPassport: 'Archive record',
+    openLogbook: 'Archive record',
     addTitle: 'Add a device',
-    editTitle: 'Edit passport: {name}',
+    editTitle: 'Edit Logbook: {name}',
     removeTitle: 'Remove this object?',
     saveNew: 'Add to collection',
     saveEdit: 'Save changes',
@@ -490,7 +487,7 @@ export const en = {
       periodLabel: 'Period',
       fieldLabel: 'Object name',
       fieldHint: 'As written on the device, for example Walkman TPS-L2.',
-      fieldError: 'Enter the object name so the passport has a title.',
+      fieldError: 'Enter the object name so the Logbook has a title.',
       screenBoot: 'RELIK ARCHIVE TERMINAL',
       screenReady: '> 18 OBJECTS ON FILE',
       screenError: '> NO SIGNAL. CHECK THE CABLE',

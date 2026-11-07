@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
-import { objects, homeSelection, featuredSelection, labPresets, getPassport, walkmanStory, periodOf } from './objects.js'
+import { objects, homeSelection, featuredSelection, labPresets, getLogbook, walkmanStory, periodOf } from './objects.js'
 import { photoCredits, creditFor } from './credits.js'
 import { en } from '../content/en.js'
 
@@ -21,7 +21,7 @@ describe('seed data', () => {
     expect(homeSelection).toHaveLength(6)
     expect(featuredSelection.objects.every(Boolean)).toBe(true)
     expect(labPresets.every((preset) => preset.object)).toBe(true)
-    expect(getPassport('walkman-tps-l2').related.length).toBe(4)
+    expect(getLogbook('walkman-tps-l2').related.length).toBe(4)
   })
 
   it('puts the 1963 cassette in the 1960s–70s period', () => {

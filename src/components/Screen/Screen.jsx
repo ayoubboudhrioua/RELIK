@@ -17,6 +17,7 @@ export function Screen({
   backdrop,
   powerOn = false,
   contentClassName = '',
+  frame = 'bezel',
   children,
   className = '',
   ...rest
@@ -25,7 +26,7 @@ export function Screen({
 
   return (
     <div
-      className={`${styles.bezel} ${className}`}
+      className={`${styles.bezel} ${frame === 'tv' ? styles.tv: ''} ${className}`}
       data-tone={tone}
       data-state={state}
       data-power-on={powerOn || undefined}
@@ -41,6 +42,15 @@ export function Screen({
         <span className={styles.scanlines} aria-hidden="true" />
         <span className={styles.reflection} aria-hidden="true" />
       </div>
+      {frame === 'tv' && (
+      <div className={styles.tvControls} aria-hidden="true">
+        <span className={styles.tvBrand}>RELIK</span>
+        <span className={styles.tvGrille} />
+        <span className={styles.tvKnob} />
+        <span className={styles.tvKnob} />
+        <span className={styles.tvLed} data-on={state === 'on' || undefined} />
+      </div>
+)}
     </div>
   )
 }

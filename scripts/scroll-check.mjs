@@ -64,7 +64,7 @@ async function scrollThrough(page) {
   console.log('home headings waiting for their reveal:', hidden.join(', ') || 'none')
 
   // A heading caught mid-reveal.
-  const target = page.locator('#passport-teaser-title')
+  const target = page.locator('#Logbook-teaser-title')
   await target.evaluate((el) => window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.8))
   await page.waitForTimeout(250)
   await page.screenshot({ path: `${outDir}/home-heading-reveal-1440.png` })
@@ -95,7 +95,7 @@ async function scrollThrough(page) {
   await page.close()
 }
 
-// ---- Passport: spec rows tick in, the photo drifts ----
+// ---- Logbook: spec rows tick in, the photo drifts ----
 {
   const page = await open()
   await page.goto(BASE + '/objects/walkman-tps-l2', { waitUntil: 'networkidle' })
@@ -104,13 +104,13 @@ async function scrollThrough(page) {
   const r0 = await rows()
   await page.locator('[data-tick]').first().scrollIntoViewIfNeeded()
   await page.waitForTimeout(150)
-  await page.screenshot({ path: `${outDir}/passport-rows-ticking-1440.png` })
+  await page.screenshot({ path: `${outDir}/Logbook-rows-ticking-1440.png` })
   await page.waitForTimeout(1200)
   const r1 = await rows()
-  console.log('passport rows hidden before', r0.filter((o) => o < 1).length, 'of', r0.length, '| after', r1.filter((o) => o < 1).length)
+  console.log('Logbook rows hidden before', r0.filter((o) => o < 1).length, 'of', r0.length, '| after', r1.filter((o) => o < 1).length)
   await page.evaluate(() => window.scrollTo(0, 300))
   await page.waitForTimeout(500)
-  console.log('passport photo transform at 300px:', await page.$eval('[data-parallax] img', (img) => img.style.transform))
+  console.log('Logbook photo transform at 300px:', await page.$eval('[data-parallax] img', (img) => img.style.transform))
   await page.close()
 }
 

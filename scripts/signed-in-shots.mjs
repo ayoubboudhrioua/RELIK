@@ -16,7 +16,7 @@ for (const [name, width, height] of [['1440', 1440, 900], ['390', 390, 844]]) {
   await page.waitForTimeout(800)
   await page.screenshot({ path: `${outDir}/collection-signed-in-${name}.png`, fullPage: true })
 
-  await page.getByRole('button', { name: /^Edit passport/ }).first().click()
+  await page.getByRole('button', { name: /^Edit Logbook/ }).first().click()
   await page.waitForTimeout(400)
   await page.screenshot({ path: `${outDir}/collection-edit-${name}.png` })
   await page.keyboard.press('Escape')

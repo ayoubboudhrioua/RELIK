@@ -12,7 +12,7 @@
     {"id": "00s", "label": "2000s", "from": 2000, "to": 2009}
   ],
   "objects": [
-    {"id": "walkman-tps-l2", "accession": "RLK·1979·001", "name": "Walkman TPS-L2", "maker": "Sony", "year": 1979, "yearLabel": "1979", "category": "Audio", "image": "objects/walkman.webp", "altImage": "objects/walkman-side.webp", "story": "The first personal stereo. Two headphone jacks, because Sony assumed listening would be shared.", "sampleCondition": "Plays · drive belt replaced", "hasFullPassport": true},
+    {"id": "walkman-tps-l2", "accession": "RLK·1979·001", "name": "Walkman TPS-L2", "maker": "Sony", "year": 1979, "yearLabel": "1979", "category": "Audio", "image": "objects/walkman.webp", "altImage": "objects/walkman-side.webp", "story": "The first personal stereo. Two headphone jacks, because Sony assumed listening would be shared.", "sampleCondition": "Plays · drive belt replaced", "hasFullLogbook": true},
     {"id": "macintosh-classic", "accession": "RLK·1990·002", "name": "Macintosh Classic", "maker": "Apple", "year": 1990, "yearLabel": "1990", "category": "Computing", "image": "objects/mac-classic.webp", "story": "Apple's first Macintosh sold for under US$1,000, with a nine-inch black-and-white screen.", "sampleCondition": "Powers on · no picture"},
     {"id": "game-boy", "accession": "RLK·1989·003", "name": "Game Boy (DMG-01)", "maker": "Nintendo", "year": 1989, "yearLabel": "1989", "category": "Gaming", "image": "objects/gameboy.webp", "story": "A monochrome screen that traded colour for battery life.", "sampleCondition": "Works · faint screen line"},
     {"id": "digital-mavica-fd85", "accession": "RLK·2000·004", "name": "Digital Mavica MVC-FD85", "maker": "Sony", "year": 2000, "yearLabel": "c. 2000", "category": "Photography", "image": "objects/mavica.webp", "story": "A digital camera that saved every photograph straight to a 3.5-inch floppy disk.", "sampleCondition": "Works · drive jams occasionally"},
@@ -37,9 +37,9 @@
     {"chapter": 1, "track": "Side A · Track 1", "phase": "Invention", "years": "1979", "title": "A tape recorder that gave up recording.", "text": "Sony's engineers started from a portable cassette recorder made for journalists. They removed the recording circuit and the speaker, added stereo playback and light headphones, and kept a second jack so two people could listen. It went on sale in Japan on 1 July 1979."},
     {"chapter": 2, "track": "Side A · Track 2", "phase": "Popularity", "years": "1980s", "title": "Music became something you carried.", "text": "Abroad it first sold as the Soundabout (USA), the Stowaway (UK) and the Freestyle (Sweden). The Walkman name won and became the everyday word for any personal stereo. The second jack and the Hotline button were made for sharing; later models dropped them as listening turned private."},
     {"chapter": 3, "track": "Side B · Track 1", "phase": "Obsolescence", "years": "1984–2010", "title": "Replaced, then replaced again.", "text": "The Discman D-50 put the compact disc in a pocket in 1984. MP3 players such as the Rio PMP300 removed the medium altogether in 1998. In 2010 Sony stopped producing cassette Walkmans in Japan."},
-    {"chapter": 4, "track": "Side B · Track 2", "phase": "Preservation", "years": "Today", "title": "Worth keeping, worth writing down.", "text": "Rubber belts soften, heads gather oxide, batteries leak. A cared-for TPS-L2 still plays. Its passport records what was replaced, by whom, and why the object matters.", "photo": "photographs/walkman-teardown.webp"}
+    {"chapter": 4, "track": "Side B · Track 2", "phase": "Preservation", "years": "Today", "title": "Worth keeping, worth writing down.", "text": "Rubber belts soften, heads gather oxide, batteries leak. A cared-for TPS-L2 still plays. Its Logbook records what was replaced, by whom, and why the object matters.", "photo": "photographs/walkman-teardown.webp"}
   ],
-  "walkmanPassport": {
+  "walkmanLogbook": {
     "specifications": [
       ["Model", "TPS-L2"],
       ["Maker", "Sony Corporation"],
@@ -72,7 +72,7 @@
     "sample": {
       "condition": {"level": 4, "word": "Good", "notes": [["Mechanism", "Plays, correct speed"], ["Audio", "Both channels clean; slight hiss on jack B"], ["Casing", "Light scuffs on the aluminium side"], ["Battery door", "Present, latch intact"], ["Hotline", "Microphone works intermittently"]]},
       "repairLog": [["Mar 2019", "Battery contacts cleaned of corrosion", "By the owner"], ["Nov 2024", "Drive belt replaced; speed checked against a test tape", "At a repair café, by a volunteer"], ["Feb 2026", "Heads and pinch roller cleaned", "By the owner"]],
-      "objectTimeline": [["1987", "Bought second-hand"], ["2019", "Found in a drawer, contacts cleaned"], ["2024", "Belt replaced at a repair café"], ["2026", "Passport opened on RELIK"]],
+      "objectTimeline": [["1987", "Bought second-hand"], ["2019", "Found in a drawer, contacts cleaned"], ["2024", "Belt replaced at a repair café"], ["2026", "Logbook opened on RELIK"]],
       "memory": "Bought second-hand in 1987. It played the same two tapes all summer, and the second jack meant my brother never had to ask."
     },
     "related": ["compact-cassette", "discman-d-50", "minidisc", "rio-pmp300"],
@@ -87,20 +87,20 @@
     {"objectId": "vhs-cassette", "values": [4, 2, 1, 2], "note": "Tape intact · no player"}
   ],
   "labOutcomes": [
-    {"id": "repair", "name": "Repair", "involves": "Diagnose the fault, find the part, and record the repair in the object's passport. Repair cafés and makerspaces can help."},
+    {"id": "repair", "name": "Repair", "involves": "Diagnose the fault, find the part, and record the repair in the object's Logbook. Repair cafés and makerspaces can help."},
     {"id": "reuse", "name": "Reuse", "involves": "Give it a daily job again: a dedicated music player, a games machine, a phone for emergencies."},
-    {"id": "donate", "name": "Donate", "involves": "Offer it to a school, club, museum or collector who will use or keep it. Pass its passport on with it."},
+    {"id": "donate", "name": "Donate", "involves": "Offer it to a school, club, museum or collector who will use or keep it. Pass its Logbook on with it."},
     {"id": "preserve", "name": "Preserve", "involves": "Clean it, store it safely, document it fully, and keep it as a record of how people lived with technology."},
     {"id": "parts", "name": "Recover parts", "involves": "Remove working components (screens, drives, buttons, boards) and list them for people repairing the same model."},
     {"id": "recycle", "name": "Recycle", "involves": "Take it to a certified e-waste collection point so metals and plastics are recovered and hazardous parts handled safely."}
   ],
   "sampleCollection": [
-    {"objectId": "walkman-tps-l2", "status": "Saved just now", "passportSections": 6},
-    {"objectId": "polaroid-sx-70", "status": "In use", "passportSections": 5, "sampleStory": "Found at a flea market in Tunis."},
-    {"objectId": "atari-2600", "status": "Needs repair", "passportSections": 3},
-    {"objectId": "discman-d-50", "status": "Preserved", "passportSections": 6},
-    {"objectId": "minidisc", "status": "In use", "passportSections": 2},
-    {"objectId": "nokia-3310", "status": "Needs repair", "passportSections": 4, "sampleStory": "My first phone."}
+    {"objectId": "walkman-tps-l2", "status": "Saved just now", "LogbookSections": 6},
+    {"objectId": "polaroid-sx-70", "status": "In use", "LogbookSections": 5, "sampleStory": "Found at a flea market in Tunis."},
+    {"objectId": "atari-2600", "status": "Needs repair", "LogbookSections": 3},
+    {"objectId": "discman-d-50", "status": "Preserved", "LogbookSections": 6},
+    {"objectId": "minidisc", "status": "In use", "LogbookSections": 2},
+    {"objectId": "nokia-3310", "status": "Needs repair", "LogbookSections": 4, "sampleStory": "My first phone."}
   ],
   "mission": "An object can lose its commercial value without losing its historical, practical, cultural or emotional value. RELIK documents those values before the object disappears, and helps people decide what should happen next."
 }

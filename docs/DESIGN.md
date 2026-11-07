@@ -200,6 +200,7 @@ The palette is restrained and material-led. Putty and graphite casings take over
 The mood is precise, warm, tactile and slightly nostalgic: late-70s hi-fi decks, Braun putty plastics, monochrome terminals and service-manual typography, all at the standard of a credible museum. Confirmed rejections: synthwave sunsets, neon grids, chrome lettering, purple or blue gradients, glassmorphism, glitch overload, pixel-art game UI, and the generic SaaS hero.
 
 **Key Characteristics:**
+
 - Whole rooms in putty or graphite casing, switched with `data-room="dark"`, which remaps the semantic tokens (`--surface`, `--text`, `--text-muted`, `--control-line`, `--focus`).
 - Light from above: raised faceplates, recessed bays and wells, keys with 4px of travel.
 - Each component is named for real hardware and backed by a real HTML control.
@@ -211,16 +212,20 @@ The mood is precise, warm, tactile and slightly nostalgic: late-70s hi-fi decks,
 The palette is two casing materials, one orange indicator and two phosphors that stay behind glass.
 
 ### Primary
+
 - **Signal Orange** (signal): The only accent. It appears as the primary transport-key fill, lit LEDs (active nav link, switch on, key hover or pressed, power lamp), the top-ranked LED meter, orange Dymo tape, the skip link and `::selection`. Text on it is always graphite (5.41:1).
 - **Signal Edge** (signal-edge): The darker orange used for the travel edge and border of the signal key and for the putty caret colour. It is never a text colour.
 
 ### Secondary
+
 - **Amber Phosphor** (amber): Screen text on CRT glass (10.65:1), lit LED-meter segments, and the focus ring in dark rooms. **Dim Amber** (amber-dim) is secondary screen text (6.56:1).
 
 ### Tertiary
+
 - **VFD Cyan-Green** (vfd): Vacuum-fluorescent readouts on dark glass only: fader readouts and `tone="vfd"` screens (12.81:1 on crt).
 
 ### Neutral
+
 - **Putty Casing** (putty): The page ground and light faceplates.
 - **Raised Putty** (putty-light): Key tops and form-field wells.
 - **Deep Putty** (putty-deep): Specimen bays, engraved plates and switch housings in light rooms.
@@ -237,6 +242,7 @@ The palette is two casing materials, one orange indicator and two phosphors that
 - **LED Lit** (led-lit): a signal lens gradient with a hot spot; its halo (led-halo) only exists under `html[data-crt="on"]`.
 
 ### Named Rules
+
 **The Fill-Only Signal Rule.** Signal orange is a fill or a light, never text or a border on putty (2.29:1 fails). If something orange carries words, the words are graphite.
 
 **The Behind-Glass Rule.** Amber and VFD cyan-green appear only on crt or dark surfaces. Amber is the dark-room focus ring; outside that one use, phosphor never touches putty.
@@ -255,6 +261,7 @@ The palette is two casing materials, one orange indicator and two phosphors that
 **Character:** A wide, heavy 70s-hardware grotesk stamped on the faceplates, over a computing-heritage sans that stays legible at length. Mono handles the service-manual data, and VT323 is reserved for phosphor. All four families are self-hosted woff2 files in `site/public/fonts/` with `font-display: swap`.
 
 ### Hierarchy
+
 - **Display** (900, clamp 2.75rem→6rem, 1.05, −0.03em): Hero and masthead headlines. Sentence case.
 - **Headline** (800, clamp 2.25rem→3.75rem, 1.25, −0.015em): Room titles (h2 of a page section).
 - **Title** (800, clamp 1.75rem→2.5rem): Panel titles. **Title-sm** (800, clamp 1.4rem→1.75rem) is for specimen names and card titles.
@@ -266,6 +273,7 @@ The palette is two casing materials, one orange indicator and two phosphors that
 Every h1–h4 sets Archivo through `font-stretch: 125%` with `text-wrap: balance`. Paragraphs use `text-wrap: pretty`. Tables and `.tabular` use tabular numbers.
 
 ### Named Rules
+
 **The 20px Phosphor Rule.** VT323 is never set below 1.25rem (20px) and never sets a paragraph. Use it for short readouts only.
 
 **The Uppercase-Is-Equipment Rule.** Uppercase is limited to mono labels, Dymo tape and screen text. Headings and body stay in sentence case.
@@ -285,6 +293,7 @@ Responsive changes are redesigns rather than scaling. Below 820px the nav hides 
 Depth is physical and has one light source above. Raised surfaces get an inset white top highlight, a 1px dark edge and a soft drop below. Recessed surfaces get an inner shadow from the top. Floor shadows under objects are blurred ellipse elements, never masks. Light rooms tint their shadows warm (rgb 40 30 10). Dark rooms use pure black.
 
 ### Shadow Vocabulary
+
 - **Raised** (`box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.45), 0 1px 0 rgb(0 0 0 / 0.12), 0 6px 12px -4px rgb(40 30 10 / 0.28)`): Putty faceplates, plus a `0 0 0 1px rgb(115 107 89 / 0.35)` case seam.
 - **Raised dark** (`inset 0 1px 0 rgb(255 255 255 / 0.08), 0 1px 0 rgb(0 0 0 / 0.5), 0 8px 16px -6px rgb(0 0 0 / 0.6)`): Graphite faceplates.
 - **Inset** (`inset 0 8px 16px -6px rgb(40 30 10 / 0.35), inset 0 1px 2px rgb(40 30 10 / 0.25)`): Specimen bays and screen wells. **Inset dark** is the black equivalent.
@@ -293,6 +302,7 @@ Depth is physical and has one light source above. Raised surfaces get an inset w
 - **LED glow** (`--led-halo`, `0 0 6px 1px rgb(255 90 31 / 0.55)`): Lit signal LEDs only, and only when CRT effects are on. With CRT effects off a lit LED is a lens gradient with no halo.
 
 ### Named Rules
+
 **The Lamp-Above Rule.** Highlights sit on top edges and shadows fall downward. Never light a surface from the side or from below.
 
 **The Travel-Is-For-Keys Rule.** The solid 4px offset edge exists because a transport key has physical travel. Don't use it on any other surface. Cards, panels and labels never get a hard offset shadow.
@@ -306,7 +316,9 @@ Radius follows the physical object, not one global value: plate 2px (Dymo tape, 
 Every component lives in `site/src/components/<Name>/` with `Name.jsx` and `Name.module.css`, and wraps a real element. **Styleguide convention:** each stateful component accepts a dev-only `data-demo` attribute (`hover`, `focus`, `active`, `on`) that freezes that state in CSS so `/styleguide` can show every state side by side. The CSS selectors pair each real pseudo-class with its `[data-demo]` twin. Use it only on `/styleguide`, never in product routes.
 
 ### Buttons: TransportKey
+
 Feels like a cassette-deck key: chunky, with travel and a status LED.
+
 - **Shape:** keys (4px), min-height 52px (64px for `lg`), 1px control-line border, top-to-bottom gradient from key top to key base.
 - **Legend:** an optional 28px recessed window holding an authored SVG transport symbol (play, record, stop, pause, forward, rewind, eject) next to a real text label. A key never shows an icon alone.
 - **Variants:** putty (default), graphite (dark rooms), signal (the one primary action per view; graphite legend).
@@ -315,9 +327,11 @@ Feels like a cassette-deck key: chunky, with travel and a status LED.
 - **States:** hover brightens by 4% and lights the 6px corner LED in signal (pale cream on the signal key). Active or `aria-pressed="true"` moves the key 3px down and removes its travel edge. Focus shows a 2px `--focus` ring at 4px offset. Disabled is pressed flat, desaturated and shows a not-allowed cursor. Loading (`aria-busy`) shows a turning reel icon (1.6s), which stops under reduced motion.
 
 ### Chips: DymoLabel
+
 Black embossed tape with off-white mono letters (600, 0.875rem, +0.14em, uppercase). A glossy gradient and an embossed text-shadow give the relief. It carries accession numbers (`RLK·1979·001`) and tags as real text. The orange-tape variant uses graphite letters and marks invented content ("Sample") and the Lab disclaimer. Short labels sit on one line; long translated labels wrap inside the tape instead of leaving the screen.
 
 ### Cards / Containers: Panel
+
 - **Corner Style:** case (10px).
 - **Background:** putty or graphite. The graphite tone sets `data-room="dark"` on the section.
 - **Shadow Strategy:** raised or raised dark, plus a 1px case seam.
@@ -325,32 +339,41 @@ Black embossed tape with off-white mono letters (600, 0.875rem, +0.14em, upperca
 - **Internal Padding:** clamp(24px, 3vw, 48px). The header column is capped at 68ch.
 
 ### Signature: SpecimenBay
+
 The object card is an `a` wrapping a `figure`. It contains a recessed bay (sizes s/m/l: 200/260/380px) lit by a radial lamp from above, a cut-out photograph with a soft drop shadow, and a blurred 62% floor ellipse. Hover or focus lifts the photo 8px and tightens the floor shadow to 82% (600ms, ease-out). The caption holds a Dymo accession number, the name in Title-sm, and mono year and category separated by a 1px hairline rule. Loading shows an empty bay pulsing at 0.5 Hz. A missing image shows a mono "photograph unavailable" message in the bay. The graphite variant has a dark well and a faint lamp.
 
 ### Signature: Screen
+
 A moulded graphite bezel around curved CRT glass with a radial vignette and a top-left reflection. Phosphor is amber by default or VFD with `tone="vfd"`. Text uses ScreenLine in VT323 at sm/md/lg/xl (20/24/32/36–56px), uppercase, with an optional dim colour. `contentClassName` lays out the content area (the hero and Archive screens hold real search forms). `powerOn` plays the power-on reveal; `backdrop` accepts a decorative layer under the text (currently unused). States: off (dark glass, visually hidden "Screen off"), loading (`aria-busy`, 1 Hz block cursor), and error (inner phosphor-dim outline). Live screens use `role="status"`. Scanlines (8%) and a 6px phosphor glow appear only under `html[data-crt="on"]`.
 
 ### Inputs / Fields: Field
+
 - **Style:** a recessed putty-light well with a 1px control-line border, keys radius, min-height 48px and a warm inner top shadow, like the label window on a cassette case. The label (600) sits above, with an optional muted hint.
 - **Focus:** 2px `--focus` outline at 2px offset; the border turns ink. On hover the border turns ink.
 - **Error / Disabled:** error shows a 2px error-rust border and a message row with an alert icon, a bold "Error" word and the message in rust. Disabled shows a dashed border on putty-deep with muted ink.
 
 ### Switch
+
 A real checkbox or radio stretched invisibly over the whole label. It shows a 46×24 recessed housing with a ridged knob, an 8px LED and the text. When on, the knob slides 22px, the LED lights signal and the label goes to 600, so three cues carry the state. An optional mono count is right-aligned; a switch with a count fills its grid cell so the number never overprints the label. On hover the housing border turns the text colour. The focus ring goes around the housing. Disabled shows a dashed housing and muted text.
 
 ### Fader
+
 A native `input type="range"` styled as a mixing-desk fader: a 6px dark slot, and a 22×40 graphite cap with a putty index line that turns signal on hover. A VFD readout window shows the current word, and a mono uppercase 1–5 scale of words (the current word is bold, with a 2px tick). `aria-valuetext` carries the word. Vertical orientation rotates the input, so the low end sits at the bottom. The focus ring goes around the cap.
 
 ### LedMeter
+
 Ten `aria-hidden` segments in a crt channel: amber when lit, signal for the top-ranked meter. The rank (`#1`), label and mono fit word ("Strong fit", "Possible", "Unlikely") carry the meaning. Segments light in a 25ms stagger. A vertical channel-strip variant and small decorative VU meters (hero only) also exist.
 
 ### TapeCounter
+
 Mechanical digit wheels in a dark housing with drum shading. A wheel rolls to its digit over 520ms with ease-out. The plain number is read from visually hidden text. A mono caption sits under the wheels.
 
 ### Navigation: Nav
+
 A 19-inch rack unit: a graphite gradient bar, at least 68px tall, with a black bottom edge. The logotype pairs a lit signal power lamp with an Archivo 900 wordmark at 125% width. Each link (Plex Sans 500, 44px) has an LED. The current page lights the LED signal, raises the weight to 600 and draws a 2px paper bar under the label. Link hover is a 5% white wash. The session control is an outlined key (line-on-dark border). Below 820px a 48px menu key opens a full-screen graphite dialog with display-size links of at least 64px.
 
 ### Added after the first style guide
+
 - **Footer:** the bottom rack unit with links, credits, course details and the "CRT effects: on/off" switch.
 - **Select:** a labelled native select in a key-radius window with a drawn chevron.
 - **Dialog:** a native `<dialog>` on a putty faceplate with two screws, a title and a 44px close key; a bottom sheet on phones. Its panel rises 12px into place (280ms; opacity only with reduced motion).
@@ -360,14 +383,16 @@ A 19-inch rack unit: a graphite gradient bar, at least 68px tall, with a black b
 - **Rooms:** `data-room="light"` restores putty tokens inside a dark room (the sign-in form).
 
 ### Focus and motion (shared)
+
 The focus ring is `outline: 2px solid var(--focus)` with a 3px offset everywhere: graphite in putty rooms, amber in dark rooms. Easing is `cubic-bezier(0.16, 1, 0.3, 1)` with durations of 90ms for press, 180ms for hover, 260ms for state and 600ms for reveal. Nothing blinks faster than 1 Hz.
 
 Authored motion, all respecting `useReducedMotion()`:
+
 - **Hero boot** (first visit per session, GSAP timeline): the CRT opens from a bright horizontal line with one soft brightness flicker (about 380ms), three log lines type in, then fold into one status line (`RLK ARCHIVE · 18 OBJECTS · READY`) and the search fades up; about 1.2s in total, skippable by key or button.
-- **Room backdrop** (`components/Backdrop`): behind the dark rooms (hero console, Walkman story, Lab teaser, closing, Archive header, Lab, passport band, sign-in) a slow amber phosphor glow drifts (48s, alternate) under static scanlines (8%) and grain (5%). Each room is a clipped window onto one `position: fixed` scene, so it reads as a single layer behind the site and never touches putty rooms. The glow moves at 0.2× the scroll speed and pauses when the tab is hidden. Glow peak alpha is 0.07, which keeps muted text at 5.1:1 or better and control lines at 3.4:1 or better on graphite. It is off under reduced motion and when "CRT effects" is off (the visitor's way to stop it).
+- **Room backdrop** (`components/Backdrop`): behind the dark rooms (hero console, Walkman story, Lab teaser, closing, Archive header, Lab, Logbook band, sign-in) a slow amber phosphor glow drifts (48s, alternate) under static scanlines (8%) and grain (5%). Each room is a clipped window onto one `position: fixed` scene, so it reads as a single layer behind the site and never touches putty rooms. The glow moves at 0.2× the scroll speed and pauses when the tab is hidden. Glow peak alpha is 0.07, which keeps muted text at 5.1:1 or better and control lines at 3.4:1 or better on graphite. It is off under reduced motion and when "CRT effects" is off (the visitor's way to stop it).
 - **Power-on reveal:** specimen photographs below the fold open from a bright line the first time they scroll into view; nothing already on screen is hidden.
 - **Walkman deck** (`routes/Home/useStoryMotion.js`): on screens 1024px wide and 640px tall or more, the section pins for four screen heights and one master timeline is scrubbed by the scroll, in four chapter segments that snap to each chapter. On a chapter change the old photo collapses to a bright line (CRT wipe) and the new one powers on, the "Side B, Track 2" eyebrow types in, headline lines rise from behind a mask, and the Dymo labels stamp down one by one with a small overshoot. The left reel slows as the right one speeds up while the tape pack moves across, and the counter rolls 0000 → 0900. Track keys scroll (Lenis) to their chapter; the active key is held down with its LED lit (`aria-current="step"`). Phones and tablets: no pin; each chapter plays its entrance once and the transport bar sticks to the bottom of the section. Reduced motion: stacked chapters with the bar at the top, nothing moving.
-- **Scroll reveals** (`motion/reveals.js`, once each, never on the first screen): section headings rise line by line from a mask (700ms); Archive cards and Collection spines arrive in batches (16px rise, 40ms stagger) and never re-animate on a filter; passport spec rows tick in (60ms apart); the passport photo drifts at a 10% offset; tape counters roll from 0000 when first seen; the hero L/R meters jump with the scroll speed and fall back in 0.8s.
+- **Scroll reveals** (`motion/reveals.js`, once each, never on the first screen): section headings rise line by line from a mask (700ms); Archive cards and Collection spines arrive in batches (16px rise, 40ms stagger) and never re-animate on a filter; Logbook spec rows tick in (60ms apart); the Logbook photo drifts at a 10% offset; tape counters roll from 0000 when first seen; the hero L/R meters jump with the scroll speed and fall back in 0.8s.
 - **Archive Gallery ⇄ Index:** GSAP Flip morphs each photo between its bay and its index thumbnail.
 - **Feedback:** key travel, LED segment stagger, tape-counter wheels, cable colour fades, toast rise.
 
@@ -376,6 +401,7 @@ Reduced motion is handled in each component's own CSS and in every GSAP use; the
 ## Do's and Don'ts
 
 ### Do:
+
 - **Do** build every section as a Panel in putty or graphite, and switch rooms with `data-room="dark"` instead of hand-picking colours.
 - **Do** read semantic tokens (`--surface`, `--text`, `--text-muted`, `--control-line`, `--focus`) inside components, so the same part works in both rooms.
 - **Do** put graphite text on any orange fill (5.41:1). Keep one signal-orange key per view.
@@ -386,6 +412,7 @@ Reduced motion is handled in each component's own CSS and in every GSAP use; the
 - **Do** use `data-demo` only on `/styleguide` to freeze states.
 
 ### Don't:
+
 - **Don't** use signal orange as text or a border on putty (2.29:1).
 - **Don't** let amber or VFD cyan-green leave dark glass, except amber as the dark-room focus ring.
 - **Don't** set VT323 below 20px or use it for paragraphs.

@@ -6,7 +6,7 @@ import { useRevealOnce } from '../../hooks/useRevealOnce.js'
 import styles from './SpecimenBay.module.css'
 
 // A recessed, lit bay holding one object photograph (a transparent cut-out),
-// with its accession label and caption. The whole bay links to the passport.
+// with its accession label and caption. The whole bay links to the Logbook.
 // - object: { name, yearLabel, category, accession, image, alt, story }
 // - to: link target, e.g. "/objects/walkman-tps-l2"
 // - size: 's' | 'm' | 'l' (height of the bay)

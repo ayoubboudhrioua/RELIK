@@ -3,7 +3,7 @@ import { en } from '../../content/en.js'
 import { Hero } from './Hero.jsx'
 import { ShapedRack } from './ShapedRack.jsx'
 import { WalkmanStory } from './WalkmanStory.jsx'
-import { PassportTeaser } from './PassportTeaser.jsx'
+import { LogbookTeaser } from './LogbookTeaser.jsx'
 import { LabTeaser } from './LabTeaser.jsx'
 import { MuseumTeaser } from './MuseumTeaser.jsx'
 import { Closing } from './Closing.jsx'
@@ -16,7 +16,7 @@ export function Home() {
       <Hero />
       <ShapedRack />
       <WalkmanStory />
-      <PassportTeaser />
+      <LogbookTeaser />
       <LabTeaser />
       <MuseumTeaser />
       <Closing />

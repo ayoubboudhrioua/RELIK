@@ -1,5 +1,5 @@
-import { Fragment, useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Screen, Cursor } from '../../components/Screen/Screen.jsx'
 import { Icon } from '../../components/Icon/Icon.jsx'
 import { useReducedMotion } from '../../hooks/useReducedMotion.js'
@@ -7,6 +7,7 @@ import { gsap, useGSAP } from '../../motion/gsap.js'
 import { objects } from '../../data/objects.js'
 import { en } from '../../content/en.js'
 import styles from './HeroTerminal.module.css'
+
 
 const t = en.home.hero
 const BOOT_KEY = 'relik:booted'
@@ -51,7 +52,8 @@ function Typed({ text }) {
 // First visit of the session (about 1.2 s, skippable): the CRT powers on,
 // three log lines type in, then fold into one status line and the search appears.
 // Later visits and reduced motion: the final state, with no animation.
-export function HeroTerminal({ className = '' }) {
+export function HeroTerminal({ className = '', onQueryChange }) {
+  
   const reducedMotion = useReducedMotion()
   const navigate = useNavigate()
   const rootRef = useRef(null)
@@ -105,7 +107,6 @@ export function HeroTerminal({ className = '' }) {
       tl.to(q('[data-log]'), { scaleY: 0.04, filter: 'brightness(2)', duration: 0.12, ease: 'power2.in' }, '+=0.04')
         .to(q('[data-log]'), { opacity: 0, duration: 0.05 })
         .to(q('[data-status] [data-char]'), { opacity: 1, duration: 0.001, stagger: 0.003 })
-        .to(q('[data-cursor]'), { opacity: 1, duration: 0.001 })
         .to(q('[data-search]'), { opacity: 1, y: 0, duration: 0.25, ease: 'power2.out', clearProps: 'all' }, '<-0.1')
 
       // Any key press skips to the end.
@@ -126,6 +127,7 @@ export function HeroTerminal({ className = '' }) {
     <div ref={rootRef} className={`${styles.root} ${className}`}>
       <Screen
         className={styles.screen}
+        frame="tv"
         label={t.screenLabel}
         state={booted ? 'on' : 'loading'}
         contentClassName={styles.content}
@@ -152,9 +154,6 @@ export function HeroTerminal({ className = '' }) {
                 </span>
               </>
             )}
-            <span data-cursor="">
-              <Cursor />
-            </span>
           </p>
         </div>
 
@@ -171,7 +170,10 @@ export function HeroTerminal({ className = '' }) {
               type="search"
               className={styles.input}
               value={query}
-              onChange={(event) => setQuery(event.target.value)}
+              onChange={(event) => {
+                setQuery(event.target.value)
+                onQueryChange?.(event.target.value)
+              }}
               placeholder={en.archive.searchPlaceholder}
               autoComplete="off"
             />
@@ -183,21 +185,6 @@ export function HeroTerminal({ className = '' }) {
               </span>
             </button>
           </div>
-          <p className={styles.suggestions}>
-            <span className={styles.tryLabel}>{t.searchTry}</span>
-            {en.archive.emptySuggestions.map((word, i) => (
-              <Fragment key={word}>
-                {i > 0 && (
-                  <span className={styles.dot} aria-hidden="true">
-                    ·
-                  </span>
-                )}
-                <Link to={`/archive?q=${encodeURIComponent(word)}`} className={styles.suggestion}>
-                  {word}
-                </Link>
-              </Fragment>
-            ))}
-          </p>
         </form>
 
         {!booted && (

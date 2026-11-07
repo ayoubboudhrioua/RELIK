@@ -20,7 +20,7 @@ const ids = {
   story: 'item-story',
 }
 
-// The passport form, used both to add a device and to edit one.
+// The Logbook form, used both to add a device and to edit one.
 // - item: the item to edit, or null to add a new one
 // - onSave(values): called with valid values
 export function ItemForm({ item, onSave, onCancel }) {

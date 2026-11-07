@@ -26,14 +26,15 @@ Shared needs: simple vocabulary, category navigation, a visible search, structur
 RELIK is an interactive digital museum of forgotten electronic devices and physical media (cameras, cassette players, consoles, early computers, MP3 players, CDs, VHS, floppy disks). Tagline: "Technology never truly disappears."
 
 It joins two ideas:
-- **An archive.** Each device gets a documented identity, the Device Passport.
+
+- **An archive.** Each device gets a documented identity, the Device Logbook.
 - **A Decision Lab.** It shows, for teaching, what could happen to an old device: repair, reuse, donation, preservation, parts recovery or recycling.
 
-Success for the prototype: journeys A (Home → Archive → filter → object → save → Collection), B (Home → Lab → pick device → change criteria → outcomes → reset) and C (Sign in → Collection → add passport → edit → back) work end to end with sample data, accessibly.
+Success for the prototype: journeys A (Home → Archive → filter → object → save → Collection), B (Home → Lab → pick device → change criteria → outcomes → reset) and C (Sign in → Collection → add Logbook → edit → back) work end to end with sample data, accessibly.
 
 ## Positioning
 
-Founding idea: *an object can lose its commercial value without losing its historical, practical, cultural or emotional value.* RELIK documents those values before the object disappears, then helps people decide what happens next. It is **not** a shop, a marketplace or a recycling-company dashboard.
+Founding idea: _an object can lose its commercial value without losing its historical, practical, cultural or emotional value._ RELIK documents those values before the object disappears, then helps people decide what happens next. It is **not** a shop, a marketplace or a recycling-company dashboard.
 
 ## Operating Context
 
@@ -41,8 +42,8 @@ University web development course ("Projet Web"), SUP'COM, Université de Cartha
 
 ## Capabilities and Constraints
 
-- In scope: home page, archive with search and filters, Device Passport pages from sample data, working Decision Lab simulation, personal collection, **simulated** sign-up, sign-in and sign-out.
-- Out of scope: real backend, database, email or photo storage; public contributions, moderation, QR codes, verified passport history; advanced allocation engine, full Sankey, exportable reports.
+- In scope: home page, archive with search and filters, Device Logbook pages from sample data, working Decision Lab simulation, personal collection, **simulated** sign-up, sign-in and sign-out.
+- Out of scope: real backend, database, email or photo storage; public contributions, moderation, QR codes, verified Logbook history; advanced allocation engine, full Sankey, exportable reports.
 - Mock services keep a real-service interface and are labelled honestly ("Simulated sign-in", "Sample data").
 - Decision Lab uses the exact sample model in CLAUDE.md; results always say "illustrative, sample assumptions" and show words, ranks and meter segments, never raw decimals.
 - All copy lives in `src/content/en.js`. English first, French later; allow 30% longer strings; no text inside images.
@@ -55,7 +56,7 @@ University web development course ("Projet Web"), SUP'COM, Université de Cartha
 
 ## Evidence on Hand
 
-- Facts: `docs/relik-seed-data.json` (18 objects, Walkman story and passport, Lab presets and outcomes, sample collection, mission). Do not invent dates, specs or prices; uncertain dates take "c.".
+- Facts: `docs/relik-seed-data.json` (18 objects, Walkman story and Logbook, Lab presets and outcomes, sample collection, mission). Do not invent dates, specs or prices; uncertain dates take "c.".
 - Photographs: `photos/objects/*.webp` (19 transparent cut-outs) and `photos/photographs/*.webp` (6 context photos), all Wikimedia Commons, credited in each folder's `CREDITS.md`.
 - Absent and must not be fabricated: testimonials, partner logos, awards, usage statistics, real user memories. Every invented memory, condition note or repair log entry is labelled **Sample**.
 

@@ -1,12 +1,12 @@
 import { DymoLabel } from '../../components/DymoLabel/DymoLabel.jsx'
 import { en } from '../../content/en.js'
-import styles from './Passport.module.css'
+import styles from './Logbook.module.css'
 
-// One numbered section of the passport, like a chapter of a service manual.
+// One numbered section of the Logbook, like a chapter of a service manual.
 // - id: anchor used by the contents list
-// - number: the section number shown in the margin (the passport is a real sequence)
+// - number: the section number shown in the margin (the Logbook is a real sequence)
 // - sample: true when the content is invented, adds a "Sample" tape
-export function PassportSection({ id, number, title, sample = false, children }) {
+export function LogbookSection({ id, number, title, sample = false, children }) {
   return (
     <section id={id} className={styles.section} aria-labelledby={`${id}-title`}>
       <header className={styles.sectionHead}>

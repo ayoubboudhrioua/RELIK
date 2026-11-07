@@ -8,27 +8,27 @@ import { useToast } from '../../components/Toast/Toast.jsx'
 import { useCollection } from '../../hooks/useCollection.jsx'
 import { useAuth } from '../../hooks/useAuth.jsx'
 import { usePageTitle } from '../../hooks/usePageTitle.js'
-import { getObject, getPassport, objects, walkmanStory, periods, labPresets } from '../../data/objects.js'
+import { getObject, getLogbook, objects, walkmanStory, periods, labPresets } from '../../data/objects.js'
 import { creditFor } from '../../data/credits.js'
 import { en } from '../../content/en.js'
 import { format } from '../../content/format.js'
-import { PassportSection } from './PassportSection.jsx'
-import styles from './Passport.module.css'
+import { LogbookSection } from './LogbookSection.jsx'
+import styles from './Logbook.module.css'
 
-const t = en.passport
+const t = en.Logbook
 
-// The Device Passport: one object's documented identity, laid out like a
-// service manual. Only the Walkman has a complete sample passport; other
+// The Device Logbook: one object's documented identity, laid out like a
+// service manual. Only the Walkman has a complete sample Logbook; other
 // objects show what the seed data has.
-export function Passport() {
+export function Logbook() {
   const { id } = useParams()
   const object = getObject(id)
   usePageTitle(object ? `${object.name} · ${t.pageTitleSuffix}` : t.notFoundTitle)
 
-  if (!object) return <PassportNotFound />
+  if (!object) return <LogbookNotFound />
 
-  const passport = getPassport(id)
-  return passport ? <FullPassport object={object} passport={passport} /> : <PartialPassport object={object} />
+  const Logbook = getLogbook(id)
+  return Logbook ? <FullLogbook object={object} Logbook={Logbook} /> : <PartialLogbook object={object} />
 }
 
 // ---------- Title band, shared by both versions ----------
@@ -152,7 +152,7 @@ function Contents({ sections }) {
 
 function Related({ number, items }) {
   return (
-    <PassportSection id="related" number={number} title={t.related}>
+    <LogbookSection id="related" number={number} title={t.related}>
       <ul role="list" className={styles.related}>
         {items.map((item) => (
           <li key={item.id}>
@@ -160,13 +160,13 @@ function Related({ number, items }) {
           </li>
         ))}
       </ul>
-    </PassportSection>
+    </LogbookSection>
   )
 }
 
-// ---------- The complete Walkman passport ----------
-function FullPassport({ object, passport }) {
-  const sample = passport.sample
+// ---------- The complete Walkman Logbook ----------
+function FullLogbook({ object, Logbook }) {
+  const sample = Logbook.sample
   const sections = [
     ['specifications', t.specifications],
     ['context', t.context],
@@ -185,10 +185,10 @@ function FullPassport({ object, passport }) {
       <div className={styles.manual}>
         <Contents sections={sections} />
         <div className={styles.pages}>
-          <PassportSection id="specifications" number={1} title={t.specifications}>
+          <LogbookSection id="specifications" number={1} title={t.specifications}>
             <div className={styles.split}>
               <dl className={styles.sheet} data-tick="">
-                {passport.specifications.map(([label, value]) => (
+                {Logbook.specifications.map(([label, value]) => (
                   <div key={label}>
                     <dt>{label}</dt>
                     <dd>{value}</dd>
@@ -197,9 +197,9 @@ function FullPassport({ object, passport }) {
               </dl>
               <Figure src={object.altImage} n={1} caption={object.name} />
             </div>
-          </PassportSection>
+          </LogbookSection>
 
-          <PassportSection id="context" number={2} title={t.context}>
+          <LogbookSection id="context" number={2} title={t.context}>
             <ol role="list" className={styles.chapters}>
               {walkmanStory.slice(0, 3).map((chapter) => (
                 <li key={chapter.chapter}>
@@ -213,20 +213,20 @@ function FullPassport({ object, passport }) {
                 </li>
               ))}
             </ol>
-          </PassportSection>
+          </LogbookSection>
 
-          <PassportSection id="uses" number={3} title={t.originalUses}>
+          <LogbookSection id="uses" number={3} title={t.originalUses}>
             <dl className={styles.uses}>
-              {passport.originalUses.map(([title, text]) => (
+              {Logbook.originalUses.map(([title, text]) => (
                 <div key={title}>
                   <dt>{title}</dt>
                   <dd>{text}</dd>
                 </div>
               ))}
             </dl>
-          </PassportSection>
+          </LogbookSection>
 
-          <PassportSection id="condition" number={4} title={t.condition} sample>
+          <LogbookSection id="condition" number={4} title={t.condition} sample>
             <div className={styles.condition}>
               <p className={styles.conditionLevel}>
                 <span className={styles.conditionLabel}>{t.conditionLevel}</span>
@@ -247,12 +247,12 @@ function FullPassport({ object, passport }) {
                 ))}
               </dl>
             </div>
-          </PassportSection>
+          </LogbookSection>
 
-          <PassportSection id="preservation" number={5} title={t.preservation}>
+          <LogbookSection id="preservation" number={5} title={t.preservation}>
             <div className={styles.split}>
               <dl className={styles.uses}>
-                {passport.preservation.map(([title, text]) => (
+                {Logbook.preservation.map(([title, text]) => (
                   <div key={title}>
                     <dt>{title}</dt>
                     <dd>{text}</dd>
@@ -261,9 +261,9 @@ function FullPassport({ object, passport }) {
               </dl>
               <Figure src="photographs/walkman-teardown.webp" n={2} caption={walkmanStory[3].title} />
             </div>
-          </PassportSection>
+          </LogbookSection>
 
-          <PassportSection id="repairs" number={6} title={t.repairLog} sample>
+          <LogbookSection id="repairs" number={6} title={t.repairLog} sample>
             <div className={styles.tableWrap}>
               <table className={styles.table}>
                 <thead>
@@ -284,22 +284,22 @@ function FullPassport({ object, passport }) {
                 </tbody>
               </table>
             </div>
-          </PassportSection>
+          </LogbookSection>
 
-          <PassportSection id="timeline" number={7} title={t.timeline}>
+          <LogbookSection id="timeline" number={7} title={t.timeline}>
             <div className={styles.timelines}>
-              <Timeline title={t.modelTimeline} entries={passport.modelTimeline} />
+              <Timeline title={t.modelTimeline} entries={Logbook.modelTimeline} />
               <Timeline title={t.objectTimeline} entries={sample.objectTimeline} sample />
             </div>
-          </PassportSection>
+          </LogbookSection>
 
-          <PassportSection id="memory" number={8} title={t.memory} sample>
+          <LogbookSection id="memory" number={8} title={t.memory} sample>
             <blockquote className={styles.memory}>
               <p>{sample.memory}</p>
             </blockquote>
-          </PassportSection>
+          </LogbookSection>
 
-          <Related number={9} items={passport.related} />
+          <Related number={9} items={Logbook.related} />
           <NextSteps object={object} />
         </div>
       </div>
@@ -326,8 +326,8 @@ function Timeline({ title, entries, sample = false }) {
   )
 }
 
-// ---------- Objects without a full passport ----------
-function PartialPassport({ object }) {
+// ---------- Objects without a full Logbook ----------
+function PartialLogbook({ object }) {
   const related = objects.filter((o) => o.category === object.category && o.id !== object.id).slice(0, 4)
   const sections = [
     ['story', t.story],
@@ -344,11 +344,11 @@ function PartialPassport({ object }) {
         <div className={styles.pages}>
           <p className={styles.note}>{t.partialNote}</p>
 
-          <PassportSection id="story" number={1} title={t.story}>
+          <LogbookSection id="story" number={1} title={t.story}>
             <p className={styles.lead}>{object.story}</p>
-          </PassportSection>
+          </LogbookSection>
 
-          <PassportSection id="specifications" number={2} title={t.specifications}>
+          <LogbookSection id="specifications" number={2} title={t.specifications}>
             <dl className={styles.sheet} data-tick="">
               <div>
                 <dt>{t.accession}</dt>
@@ -367,11 +367,11 @@ function PartialPassport({ object }) {
                 <dd>{object.category}</dd>
               </div>
             </dl>
-          </PassportSection>
+          </LogbookSection>
 
-          <PassportSection id="condition" number={3} title={t.condition} sample>
+          <LogbookSection id="condition" number={3} title={t.condition} sample>
             <p className={styles.lead}>{object.sampleCondition}</p>
-          </PassportSection>
+          </LogbookSection>
 
           {related.length > 0 && <Related number={4} items={related} />}
           <NextSteps object={object} />
@@ -381,7 +381,7 @@ function PartialPassport({ object }) {
   )
 }
 
-function PassportNotFound() {
+function LogbookNotFound() {
   return (
     <div className={styles.notFound}>
       <Panel title={t.notFoundTitle} titleAs="h1" titleId="page-title">

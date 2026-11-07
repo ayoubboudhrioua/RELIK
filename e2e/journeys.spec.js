@@ -30,7 +30,7 @@ test('A: Home → Archive → filter → object → save → My Collection', asy
   await expect(page).toHaveURL(/cat=Gaming/)
   await expect(page.getByRole('status').filter({ hasText: 'objects found' })).toHaveText('2 objects found')
 
-  // Open the Game Boy passport and save it.
+  // Open the Game Boy Logbook and save it.
   await page.getByRole('link', { name: /Game Boy/ }).first().click()
   await expect(page.getByRole('heading', { level: 1, name: 'Game Boy (DMG-01)' })).toBeVisible()
   await page.getByRole('button', { name: 'Save to collection' }).filter({ visible: true }).click()
@@ -80,7 +80,7 @@ test('B: Home → Decision Lab → device → criteria → futures → reset', a
   if (!isPhone(testInfo)) await expect(page.getByLabel(/Macintosh Classic/)).toBeChecked()
 })
 
-test('C: Sign in → My Collection → add a passport → edit it → back to the collection', async ({ page }) => {
+test('C: Sign in → My Collection → add a Logbook → edit it → back to the collection', async ({ page }) => {
   // Create an account (simulated) and land in an empty collection.
   await page.goto('/register')
   await page.getByLabel('Your name').fill('Amine')
@@ -103,10 +103,10 @@ test('C: Sign in → My Collection → add a passport → edit it → back to th
   await expect(page.getByRole('heading', { level: 3, name: 'Sony Walkman WM-2' })).toBeVisible()
 
   // Edit it: change the status, then back to the rack.
-  await page.getByRole('button', { name: 'Edit passport: Sony Walkman WM-2' }).click()
+  await page.getByRole('button', { name: 'Edit Logbook: Sony Walkman WM-2' }).click()
   await page.getByRole('dialog').getByLabel('Needs repair').check()
   await page.getByRole('dialog').getByRole('button', { name: 'Save changes' }).click()
-  await expect(page.getByText('Passport updated.')).toBeVisible()
+  await expect(page.getByText('Logbook updated.')).toBeVisible()
   const spine = page.getByRole('listitem').filter({ has: page.getByRole('heading', { name: 'Sony Walkman WM-2' }) })
   await expect(spine).toContainText('Needs repair')
 

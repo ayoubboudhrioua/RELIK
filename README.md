@@ -7,7 +7,7 @@
 RELIK is an interactive digital museum of forgotten electronic devices and physical media
 (cassette players, early computers, consoles, cameras, VHS, floppy disks). It combines:
 
-- **An archive**: every object has a documented identity, its *Device Passport*.
+- **An archive**: every object has a documented identity, its _Device Logbook_.
 - **A Decision Lab**: an illustrative simulation of what could happen to an old device:
   repair, reuse, donation, preservation, parts recovery or recycling.
 
@@ -22,12 +22,12 @@ Requires Node.js 20.19 or newer.
 
 ## Scripts
 
-| Command | What it does |
-|---|---|
-| `npm run dev` | Start the development server |
-| `npm run build` | Production build in `dist/` |
-| `npm run preview` | Serve the production build |
-| `npm run test` | Unit tests (Vitest) |
+| Command            | What it does                                                                 |
+| ------------------ | ---------------------------------------------------------------------------- |
+| `npm run dev`      | Start the development server                                                 |
+| `npm run build`    | Production build in `dist/`                                                  |
+| `npm run preview`  | Serve the production build                                                   |
+| `npm run test`     | Unit tests (Vitest)                                                          |
 | `npm run test:e2e` | Browser tests (Playwright); run `npx playwright install chromium` once first |
 
 ## Built with
@@ -50,7 +50,7 @@ React, Vite, React Router, CSS Modules, GSAP, Lenis, Vitest and Playwright.
 ## To do
 
 - [ ] French translation (`src/content/fr.js`)
-- [ ] Complete passports for more objects
+- [ ] Complete Logbooks for more objects
 - [ ] Undo after removing an object from a collection
 - [ ] Test in Firefox and Safari
 
@@ -58,4 +58,3 @@ React, Vite, React Router, CSS Modules, GSAP, Lenis, Vitest and Playwright.
 
 Photographs come from Wikimedia Commons. Authors and licences are listed on the
 `/credits` page of the site.
-

@@ -227,9 +227,9 @@ function Rack() {
                         <Link
                           to={`/objects/${item.objectId}`}
                           className={styles.spineLink}
-                          aria-label={`${t.openPassport}: ${item.name}`}
+                          aria-label={`${t.openLogbook}: ${item.name}`}
                         >
-                          {t.openPassport}
+                          {t.openLogbook}
                         </Link>
                       )}
                       <button

@@ -14,10 +14,6 @@
   height: 100%;
 }
 
-.screen > div {
-  height: 100%;
-}
-
 .content {
   display: grid;
   /* minmax(0, 1fr): the input's natural width must not widen the screen. */
@@ -80,15 +76,15 @@
   display: flex;
   align-items: center;
   min-height: 56px;
-  padding-left: var(--space-4);
-  border: 1px solid var(--amber-dim);
-  border-radius: var(--radius-key);
-  background: rgb(255 176 0 / 0.04);
 }
 
+/* No box: the line shows it's active by brightening and underlining. */
 .field:focus-within {
-  outline: 2px solid var(--amber);
-  outline-offset: 2px;
+  box-shadow: 0 2px 0 var(--amber-dim);
+}
+
+.field:focus-within .prompt {
+  text-shadow: 0 0 10px var(--amber);
 }
 
 .prompt {
@@ -146,8 +142,6 @@
   gap: var(--space-1);
   padding: 4px var(--space-2);
   border-radius: 4px;
-  background: rgb(255 176 0 / 0.1);
-  box-shadow: inset 0 -2px 0 rgb(0 0 0 / 0.55), inset 0 1px 0 rgb(255 176 0 / 0.12);
   font-family: var(--font-screen);
   font-size: var(--screen-sm);
   line-height: 1;
@@ -170,50 +164,11 @@
   border-radius: var(--radius-key);
 }
 
-/* ---- Suggestions: plain links, separated by middots ---- */
-.suggestions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0 var(--space-2);
-  margin: 0;
-  font-family: var(--font-screen);
-  font-size: var(--screen-sm);
-  line-height: 1;
-  color: var(--amber-dim);
-}
 
-.tryLabel {
-  margin-right: var(--space-2);
-  text-transform: uppercase;
-}
 
-.dot {
-  user-select: none;
-}
 
-.suggestion {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 44px;
-  min-height: 44px;
-  color: var(--amber-dim);
-  text-decoration: none;
-  text-transform: lowercase;
-}
 
-.suggestion:hover,
-.suggestion:focus-visible {
-  color: var(--amber);
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
 
-.suggestion:focus-visible {
-  outline: 2px solid var(--amber);
-  outline-offset: 2px;
-}
 
 /* ---- Skip: only during the start-up ---- */
 .skip {

@@ -80,7 +80,7 @@ for (const [device, width, height] of [['Desktop', 1440, 900], ['Mobile', 390, 8
   const screens = [
     ['Home', '/'],
     ['Archive', '/archive'],
-    ['Passport (Walkman)', '/objects/walkman-tps-l2'],
+    ['Logbook (Walkman)', '/objects/walkman-tps-l2'],
     ['Decision Lab', '/lab'],
     ['Sign in', '/signin'],
   ]
@@ -132,7 +132,7 @@ for (const [device, width, height] of [['Desktop', 1440, 900], ['Mobile', 390, 8
   await page.getByRole('button', { name: 'Add a device' }).first().click()
   await page.getByRole('dialog').getByRole('button', { name: 'Add to collection' }).click()
   await page.waitForTimeout(400)
-  await viewport(page, 'Desktop / States / Passport form with errors')
+  await viewport(page, 'Desktop / States / Logbook form with errors')
   await page.close()
 }
 {

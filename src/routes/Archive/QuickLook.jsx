@@ -22,10 +22,10 @@ export function QuickLook({ object, onClose }) {
   function toggleSave() {
     if (saved) {
       unsaveObject(object.id)
-      showToast(en.passport.removedToast)
+      showToast(en.Logbook.removedToast)
     } else {
       saveObject(object.id)
-      showToast(user ? en.passport.savedToast : en.passport.savedGuestToast)
+      showToast(user ? en.Logbook.savedToast : en.Logbook.savedGuestToast)
     }
   }
 
@@ -39,7 +39,7 @@ export function QuickLook({ object, onClose }) {
           <DymoLabel>{object.accession}</DymoLabel>
           <dl className={styles.sheet}>
             <div>
-              <dt>{en.passport.year}</dt>
+              <dt>{en.Logbook.year}</dt>
               <dd>{object.yearLabel}</dd>
             </div>
             <div>
@@ -47,7 +47,7 @@ export function QuickLook({ object, onClose }) {
               <dd>{object.maker}</dd>
             </div>
             <div>
-              <dt>{en.passport.category}</dt>
+              <dt>{en.Logbook.category}</dt>
               <dd>{object.category}</dd>
             </div>
             <div>
@@ -60,10 +60,10 @@ export function QuickLook({ object, onClose }) {
           <p className={styles.story}>{object.story}</p>
           <div className={styles.actions}>
             <TransportKey to={`/objects/${object.id}`} variant="signal" icon="play">
-              {t.openPassport}
+              {t.openLogbook}
             </TransportKey>
             <TransportKey icon="record" pressed={saved} onClick={toggleSave}>
-              {saved ? (user ? en.passport.saved : en.passport.savedGuest) : en.passport.save}
+              {saved ? (user ? en.Logbook.saved : en.Logbook.savedGuest) : en.Logbook.save}
             </TransportKey>
           </div>
         </div>

@@ -29,7 +29,7 @@ function valuesOf(preset) {
 export function Lab() {
   usePageTitle(t.pageTitle)
   const compact = useMediaQuery('(max-width: 820px)')
-  // A passport can open the Lab on its own device: /lab?device=game-boy
+  // A Logbook can open the Lab on its own device: /lab?device=game-boy
   const [params] = useSearchParams()
   const startPreset = labPresets.find((p) => p.objectId === params.get('device')) ?? DEFAULT_PRESET
 

@@ -4,4 +4,7 @@ test-results/
 playwright-report/
 .vite/
 .impeccable/
-
+.agents/
+.claude/
+design-system/
+./docs/claude.md

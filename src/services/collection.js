@@ -100,7 +100,7 @@ export function updateItem(email, id, changes) {
       ...item,
       ...changes,
       year: changes.year === '' ? null : changes.year != null ? Number(changes.year) : item.year,
-      // Once the owner edits a sample passport, the text is theirs.
+      // Once the owner edits a sample Logbook, the text is theirs.
       isSample: false,
       updatedAt: new Date().toISOString(),
     }

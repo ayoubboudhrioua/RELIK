@@ -29,7 +29,7 @@ const shots = [
   ['home-closing', '/', 'section[aria-labelledby="closing-title"]'],
   ['archive', '/archive', 0],
   ['lab', '/lab', 0],
-  ['passport', '/objects/walkman-tps-l2', 0],
+  ['Logbook', '/objects/walkman-tps-l2', 0],
   ['signin', '/signin', 0],
 ]
 

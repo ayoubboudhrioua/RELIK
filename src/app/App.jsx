@@ -16,7 +16,7 @@ import { Lab } from '../routes/Lab/Lab.jsx'
 // pick the named export.)
 const page = (load, name) => lazy(() => load().then((module) => ({ default: module[name] })))
 
-const Passport = page(() => import('../routes/Passport/Passport.jsx'), 'Passport')
+const Logbook = page(() => import('../routes/Logbook/Logbook.jsx'), 'Logbook')
 const Collection = page(() => import('../routes/Collection/Collection.jsx'), 'Collection')
 const SignIn = page(() => import('../routes/Auth/SignIn.jsx'), 'SignIn')
 const Register = page(() => import('../routes/Auth/Register.jsx'), 'Register')
@@ -41,7 +41,7 @@ export function App() {
                   <Route element={<Layout />}>
                     <Route index element={<Home />} />
                     <Route path="archive" element={<Archive />} />
-                    <Route path="objects/:id" element={<Passport />} />
+                    <Route path="objects/:id" element={<Logbook />} />
                     <Route path="lab" element={<Lab />} />
                     <Route path="collection" element={<Collection />} />
                     <Route path="signin" element={<SignIn />} />

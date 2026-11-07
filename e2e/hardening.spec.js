@@ -33,7 +33,7 @@ test('a very long name and story never push the page sideways', async ({ page })
   expect(overflow).toBeLessThanOrEqual(0)
 })
 
-test('keyboard only: skip link, search, filter, open a passport and save', async ({ page }) => {
+test('keyboard only: skip link, search, filter, open a Logbook and save', async ({ page }) => {
   await page.goto('/archive')
 
   // The skip link is the first stop and moves focus to the main content.
@@ -46,7 +46,7 @@ test('keyboard only: skip link, search, filter, open a passport and save', async
   await page.keyboard.type('walkman')
   await expect(page.getByRole('status').filter({ hasText: /objects? found/ })).toHaveText('1 object found')
 
-  // Open the passport from the results with the keyboard.
+  // Open the Logbook from the results with the keyboard.
   const link = page.getByRole('link', { name: /Walkman TPS-L2/ }).last()
   await link.focus()
   await page.keyboard.press('Enter')

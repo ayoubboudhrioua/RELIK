@@ -1,20 +1,20 @@
 import { TransportKey } from '../../components/TransportKey/TransportKey.jsx'
 import { DymoLabel } from '../../components/DymoLabel/DymoLabel.jsx'
-import { getObject, getPassport } from '../../data/objects.js'
+import { getObject, getLogbook } from '../../data/objects.js'
 import { en } from '../../content/en.js'
-import styles from './PassportTeaser.module.css'
+import styles from './LogbookTeaser.module.css'
 
-const t = en.home.passportTeaser
+const t = en.home.LogbookTeaser
 
-// Device Passport teaser, laid out like an open service manual:
+// Device Logbook teaser, laid out like an open service manual:
 // a figure on the left page, a specification sheet on the right.
-export function PassportTeaser() {
+export function LogbookTeaser() {
   const walkman = getObject('walkman-tps-l2')
-  const passport = getPassport('walkman-tps-l2')
-  const specs = passport.specifications.filter(([label]) => t.specRows.includes(label))
+  const Logbook = getLogbook('walkman-tps-l2')
+  const specs = Logbook.specifications.filter(([label]) => t.specRows.includes(label))
 
   return (
-    <section className={styles.room} aria-labelledby="passport-teaser-title">
+    <section className={styles.room} aria-labelledby="Logbook-teaser-title">
       <div className={styles.spread}>
         <figure className={styles.leftPage}>
           <div className={styles.plate}>
@@ -34,7 +34,7 @@ export function PassportTeaser() {
         </figure>
 
         <div className={styles.rightPage}>
-          <h2 id="passport-teaser-title" className={styles.title}>
+          <h2 id="Logbook-teaser-title" className={styles.title}>
             {t.title}
           </h2>
           <p className={styles.text}>{t.text}</p>

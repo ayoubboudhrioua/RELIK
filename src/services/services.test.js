@@ -41,7 +41,7 @@ describe('validation', () => {
     })
   })
 
-  it('rejects impossible years in a passport', () => {
+  it('rejects impossible years in a Logbook', () => {
     expect(validateItem({ name: 'Walkman', year: '3000', status: 'Stored' })).toEqual({ year: 'yearInvalid' })
     expect(validateItem({ name: 'Walkman', year: '', status: 'Stored' })).toEqual({})
   })
@@ -101,7 +101,7 @@ describe('collection (simulated)', () => {
     expect(demo.every((item) => item.isSample)).toBe(true)
   })
 
-  it('adds, edits and removes a passport', () => {
+  it('adds, edits and removes a Logbook', () => {
     const item = addItem(email, { name: 'Sony Walkman WM-2', year: '1981', status: 'In use' })
     expect(listItems(email)).toHaveLength(1)
     expect(item.year).toBe(1981)

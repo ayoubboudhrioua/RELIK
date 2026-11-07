@@ -33,19 +33,19 @@ Open <http://localhost:5173>.
 These are the paths the prototype must support end to end.
 
 - **A. Find and save an object**
-  Home → *Explore the Archive* → turn on a category switch → open an object → *Save to collection* → *My collection* → *Sign in*.
+  Home → _Explore the Archive_ → turn on a category switch → open an object → _Save to collection_ → _My collection_ → _Sign in_.
 - **B. Explore a device's futures**
-  Home → *Enter the Decision Lab* → pick a device → move the faders (mouse, or the arrow keys) → change the priority → *Reset*.
-- **C. Keep your own passports**
-  *Sign in* → *Create an account*, or *Use the demo account* (`demo@relik.example` / `relik-demo`) → *Add a device* → submit it empty to see the errors → fill it in → *Edit passport* → *Remove*.
+  Home → _Enter the Decision Lab_ → pick a device → move the faders (mouse, or the arrow keys) → change the priority → _Reset_.
+- **C. Keep your own Logbooks**
+  _Sign in_ → _Create an account_, or _Use the demo account_ (`demo@relik.example` / `relik-demo`) → _Add a device_ → submit it empty to see the errors → fill it in → _Edit Logbook_ → _Remove_.
 
 ## 4. Useful extras
 
 - **`/styleguide`** shows every component in every state. It exists only in development.
 - **`?pseudo`** at the end of any address (for example `/lab?pseudo`) makes all text about 30% longer, roughly French length. Nothing should overflow or get cut off.
 - **CRT effects**: the switch in the footer turns the scanlines and screen glow on and off.
-- **Reduced motion**: in Chrome DevTools, open ⋮ → *More tools* → *Rendering* → *Emulate CSS prefers-reduced-motion: reduce*. The site should stay complete and calm, with no start-up sequence and no pinned story.
-- **Resetting your data**: accounts and collections are simulated and stored in your browser. Open DevTools → *Application* → *Local Storage* and delete the `relik:*` keys.
+- **Reduced motion**: in Chrome DevTools, open ⋮ → _More tools_ → _Rendering_ → _Emulate CSS prefers-reduced-motion: reduce_. The site should stay complete and calm, with no start-up sequence and no pinned story.
+- **Resetting your data**: accounts and collections are simulated and stored in your browser. Open DevTools → _Application_ → _Local Storage_ and delete the `relik:*` keys.
 
 ## 5. Automated checks
 
@@ -81,14 +81,14 @@ Then open a Pull Request on GitHub.
 
 ## Where things live
 
-| What | Where |
-|---|---|
-| All interface text | `src/content/en.js` |
-| Object facts (names, years, stories) | `src/data/relik-seed-data.json` |
-| Photo credits | `src/data/credits.js` (shown on `/credits`) |
-| Decision Lab maths | `src/lab/model.js` (tested in `model.test.js`) |
-| Design tokens (colours, type, spacing) | `src/styles/tokens.css` |
-| How the parts fit together | `docs/ARCHITECTURE.md` |
+| What                                   | Where                                          |
+| -------------------------------------- | ---------------------------------------------- |
+| All interface text                     | `src/content/en.js`                            |
+| Object facts (names, years, stories)   | `src/data/relik-seed-data.json`                |
+| Photo credits                          | `src/data/credits.js` (shown on `/credits`)    |
+| Decision Lab maths                     | `src/lab/model.js` (tested in `model.test.js`) |
+| Design tokens (colours, type, spacing) | `src/styles/tokens.css`                        |
+| How the parts fit together             | `docs/ARCHITECTURE.md`                         |
 
 ## House rules
 
