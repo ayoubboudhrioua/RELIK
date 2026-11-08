@@ -19,22 +19,16 @@
 */
 .grid {
   display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
   grid-template-areas:
-    'screen bench'
-    'headline headline'
+    'headline tv'
     'controls controls';
+  align-items: center;
   gap: var(--space-5) var(--space-7);
 }
 
-.screen {
-  grid-area: screen;
-  align-self: stretch;
-}
-
-/* ---- Bench: the lit bay ---- */
-.bench {
-  grid-area: bench;
+.tv{
+  grid-area: tv;
 }
 
 
@@ -42,7 +36,7 @@
 /* ---- Headline: stamped on the faceplate, never inside the screen ---- */
 .headline {
   grid-area: headline;
-  font-size: min(clamp(2.4rem, 0.4rem + 4.6vw, 4.75rem), 9.5vh);
+  font-size: min(clamp(2.4rem, 0.4rem + 3.6vw, 4.25rem), 9vh);
   font-weight: 900;
   line-height: 0.98;
   letter-spacing: -0.03em;
@@ -104,10 +98,9 @@
   .grid {
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
-      'screen'
       'headline'
-      'controls'
-      'bench';
+      'tv'
+      'controls';
     gap: var(--space-5);
   }
 
@@ -136,86 +129,4 @@
     grid-template-columns: minmax(0, 1fr);
     width: 100%;
   }
-}
-.preview { display: grid; gap: var(--space-2); }
-
-
-
-.dim { opacity: 0.45; }
-
-
-@keyframes channel {
-  0%   { opacity: 0; transform: scaleY(0.04); filter: brightness(2.2) blur(2px); }
-  45%  { opacity: 1; transform: scaleY(1); }
-  100% { filter: none; }
-}
-.tvLink {
-  display: grid;
-  gap: var(--space-4);
-  color: inherit;
-  text-decoration: none;
-  border-radius: var(--radius-plate);
-}
-
-.tvLink:focus-visible {
-  outline: 2px solid var(--amber);
-  outline-offset: 6px;
-}
-
-.tv { --tv-h: clamp(190px, 27vh, 300px); }
-
-/* Keep the centre of the tube lit, so black objects (pager, Nokia) don't vanish. */
-.tvPicture {
-  position: relative;
-  display: grid;
-  place-items: center;
-  height: var(--tv-h);
-  padding: var(--space-4);
-  background: radial-gradient(ellipse 55% 60% at 50% 50%, rgb(255 236 200 / 0.14), transparent 75%);
-}
-
-.tvPhoto {
-  max-width: 80%;
-  max-height: calc(var(--tv-h) - 3rem);
-  object-fit: contain;
-}
-
-.osd {
-  position: absolute;
-  top: var(--space-3);
-  right: var(--space-5);
-  font-family: var(--font-screen);
-  font-size: 1.25rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--amber);
-}
-
-.caption { display: grid; justify-items: start; gap: var(--space-2); }
-.accession { font-size: var(--text-xs); }
-
-.name {
-  font-family: var(--font-display);
-  font-stretch: 125%;
-  font-weight: 800;
-  font-size: var(--text-xl);
-  letter-spacing: -0.015em;
-  color: var(--paper-on-dark);
-}
-
-.tvLink:hover .name { text-decoration: underline; text-underline-offset: 4px; }
-
-.meta {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  font-family: var(--font-mono);
-  font-size: var(--text-sm);
-  color: var(--muted-on-dark);
-}
-
-.metaRule { width: 1px; height: 1em; background: currentColor; opacity: 0.4; }
-
-@media (prefers-reduced-motion: no-preference) {
-  .tvPhoto { animation: channel 360ms var(--ease-out) both; }
 }

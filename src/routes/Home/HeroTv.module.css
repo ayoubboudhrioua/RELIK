@@ -1,0 +1,143 @@
+.root {
+  --tv-h: clamp(240px, 40vh, 400px);
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+}
+
+/* The picture: the photo fills the tube, the command line sits at the bottom. */
+.root .picture {
+  position: relative;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  height: var(--tv-h);
+  padding: var(--space-4) var(--space-6) var(--space-3);
+  background: radial-gradient(ellipse 50% 55% at 50% 45%, rgb(255 236 200 / 0.14), transparent 75%);
+}
+
+.osd {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-6);
+  z-index: 1;
+  font-family: var(--font-screen);
+  font-size: 1.25rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+
+.photoLink {
+  display: grid;
+  place-items: center;
+  min-height: 0;
+}
+
+.photo {
+  max-width: 70%;
+  max-height: calc(var(--tv-h) - 7rem);
+  object-fit: contain;
+}
+
+/* The static fills the tube edge to edge, above the command line. */
+.static {
+  margin:
+    calc(-1 * var(--space-4))
+    calc(-1 * var(--space-6))
+    var(--space-2);
+}
+
+/* ---- Command line: no box, just a prompt ---- */
+.command {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 48px;
+}
+
+.command:focus-within { box-shadow: 0 2px 0 var(--amber-dim); }
+
+.prompt {
+  font-family: var(--font-screen);
+  font-size: 1.625rem;
+  line-height: 1;
+  color: var(--amber);
+}
+
+.command:focus-within .prompt { text-shadow: 0 0 10px var(--amber); }
+
+.input {
+  flex: 1;
+  min-width: 0;
+  min-height: 46px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--amber);
+  caret-color: var(--amber);
+  font-family: var(--font-screen);
+  font-size: 1.625rem;
+}
+
+.input:focus,
+.input:focus-visible { outline: none; }
+
+.input::placeholder { color: var(--amber-dim); opacity: 0.6; }
+.input::-webkit-search-cancel-button { display: none; }
+
+.enter {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  min-width: 44px;
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+  color: var(--amber-dim);
+  cursor: pointer;
+}
+
+.enter:hover { color: var(--amber); }
+
+.enter:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: -4px;
+  border-radius: var(--radius-key);
+}
+
+/* ---- One caption line under the cabinet ---- */
+.caption {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  padding-left: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--muted-on-dark);
+}
+
+.name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--text-lg);
+  color: var(--paper-on-dark);
+  text-decoration: none;
+}
+
+.name:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+.name:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .photo { animation: channel 360ms var(--ease-out) both; }
+}
+
+@keyframes channel {
+  0%   { opacity: 0; transform: scaleY(0.04); filter: brightness(2.2) blur(2px); }
+  45%  { opacity: 1; transform: scaleY(1); }
+  100% { filter: none; }
+}
