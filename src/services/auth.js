@@ -1,115 +1,94 @@
-// SIMULATED authentication. There is no server: accounts live in this
-// browser's localStorage. The functions have the same shape a real auth API
-// would have (async, throw on failure), so a real service could replace this file.
+// Accounts and sessions, through the RELIK server (server/routes/auth.js).
+// The server keeps the accounts; this file keeps the session token and the
+// signed-in user ({ name, email }) in the browser so pages can show them at once.
 //
-// Passwords are never stored as typed: we keep a SHA-256 hash. That is still
-// not real security; it only avoids showing passwords in localStorage.
+// Forms are checked here first (same rules as the server) so errors appear
+// without waiting for the network.
 
 import { readStorage, writeStorage, removeStorage } from './storage.js'
 import { validateRegister, validateSignIn, validateReset, hasErrors } from './validation.js'
+import { request, ApiError, getToken, setToken, clearToken } from './api.js'
 
-const USERS_KEY = 'relik:users'
 const SESSION_KEY = 'relik:session'
+let memorySession = null
 
 // A ready-made account so visitors can try the collection straight away.
+// The server creates it when it starts (server/demo.js).
 export const DEMO_ACCOUNT = {
   name: 'Demo visitor',
   email: 'demo@relik.example',
   password: 'relik-demo',
 }
 
-// Fake network delay so loading states can be seen. No delay in tests.
-const LATENCY = import.meta.env?.MODE === 'test' ? 0 : 450
+// Pages import AuthError; it is the same error the API helper throws.
+export const AuthError = ApiError
 
-function wait() {
-  return new Promise((resolve) => setTimeout(resolve, LATENCY))
+function startSession({ user, token }) {
+  setToken(token)
+  memorySession = user
+  writeStorage(SESSION_KEY, user)
+  return user
 }
 
-// An error with a `code` that matches a key in en.auth.errors.
-export class AuthError extends Error {
-  constructor(code, fields = {}) {
-    super(code)
-    this.name = 'AuthError'
-    this.code = code
-    this.fields = fields
-  }
+function endSession() {
+  clearToken()
+  memorySession = null
+  removeStorage(SESSION_KEY)
 }
 
-async function hash(text) {
-  const bytes = new TextEncoder().encode(text)
-  const digest = await crypto.subtle.digest('SHA-256', bytes)
-  return Array.from(new Uint8Array(digest))
-    .map((b) => b.toString(16).padStart(2, '0'))
-    .join('')
-}
-
-function normaliseEmail(email) {
-  return email.trim().toLowerCase()
-}
-
-function readUsers() {
-  return readStorage(USERS_KEY, {})
-}
-
-function startSession(user) {
-  const session = { name: user.name, email: user.email }
-  writeStorage(SESSION_KEY, session)
-  return session
-}
-
-// The signed-in user ({ name, email }) or null.
+// The signed-in user ({ name, email }) or null. Instant: no network call.
 export function getSession() {
-  return readStorage(SESSION_KEY, null)
+  if (!getToken()) return null
+  return readStorage(SESSION_KEY, null) ?? memorySession
+}
+
+// Asks the server whether the saved session is still valid.
+// Returns the user, or null (and forgets the session) if the server says no.
+export async function checkSession() {
+  if (!getToken()) return null
+  try {
+    const { user } = await request('/auth/me')
+    memorySession = user
+    writeStorage(SESSION_KEY, user)
+    return user
+  } catch (error) {
+    if (error.status === 401) {
+      endSession()
+      return null
+    }
+    // Server unreachable: keep what we have.
+    return getSession()
+  }
 }
 
 export async function register({ name, email, password }) {
   const fields = validateRegister({ name, email, password })
   if (hasErrors(fields)) throw new AuthError('invalid', fields)
-
-  await wait()
-  const users = readUsers()
-  const key = normaliseEmail(email)
-  if (users[key]) throw new AuthError('emailTaken', { email: 'emailTaken' })
-
-  users[key] = { name: name.trim(), email: key, passwordHash: await hash(password) }
-  writeStorage(USERS_KEY, users)
-  return startSession(users[key])
+  const answer = await request('/auth/register', { method: 'POST', body: { name, email, password } })
+  return startSession(answer)
 }
 
 export async function signIn({ email, password }) {
   const fields = validateSignIn({ email, password })
   if (hasErrors(fields)) throw new AuthError('invalid', fields)
-
-  await wait()
-  const users = readUsers()
-  const key = normaliseEmail(email)
-
-  // The demo account is created the first time someone uses it.
-  if (key === DEMO_ACCOUNT.email && !users[key]) {
-    users[key] = {
-      name: DEMO_ACCOUNT.name,
-      email: key,
-      passwordHash: await hash(DEMO_ACCOUNT.password),
-    }
-    writeStorage(USERS_KEY, users)
-  }
-
-  const user = users[key]
-  if (!user || user.passwordHash !== (await hash(password))) {
-    throw new AuthError('wrongCredentials')
-  }
-  return startSession(user)
+  const answer = await request('/auth/login', { method: 'POST', body: { email, password } })
+  return startSession(answer)
 }
 
 export async function signOut() {
-  removeStorage(SESSION_KEY)
+  try {
+    await request('/auth/logout', { method: 'POST' })
+  } catch {
+    // Signed out locally even if the server cannot be reached.
+  } finally {
+    endSession()
+  }
 }
 
-// Always "succeeds" and never says whether the account exists,
+// The server always "succeeds" and never says whether the account exists,
 // like a real reset form should. No email is sent.
 export async function requestPasswordReset({ email }) {
   const fields = validateReset({ email })
   if (hasErrors(fields)) throw new AuthError('invalid', fields)
-  await wait()
-  return { email: normaliseEmail(email) }
+  return request('/auth/reset', { method: 'POST', body: { email } })
 }

@@ -51,7 +51,7 @@ function Gate() {
 
 // Signed in: overview, timeline, filters and the rack of spines.
 function Rack() {
-  const { items, addItem, updateItem, removeItem, canStore } = useCollection()
+  const { items, loading, error, addItem, updateItem, removeItem, canStore } = useCollection()
   const showToast = useToast()
   const [query, setQuery] = useState('')
   const [status, setStatus] = useState('')
@@ -71,19 +71,25 @@ function Rack() {
 
   const dated = [...items].filter((item) => item.year).sort((a, b) => a.year - b.year)
 
-  function save(values) {
+  // Errors from the server are thrown back to the form, which shows them.
+  async function save(values) {
     if (editing === 'new') {
-      addItem(values)
+      await addItem(values)
       showToast(t.added)
     } else {
-      updateItem(editing.id, values)
+      await updateItem(editing.id, values)
       showToast(t.updated)
     }
     setEditing(null)
   }
 
-  function confirmRemove() {
-    removeItem(removing.id)
+  async function confirmRemove() {
+    try {
+      await removeItem(removing.id)
+    } catch {
+      showToast(t.actionFailed)
+      return
+    }
     showToast(t.removed)
     setRemoving(null)
     // Keyboard users continue from the rack heading, not the top of the page.
@@ -108,7 +114,17 @@ function Rack() {
         </p>
       )}
 
-      {items.length === 0 ? (
+      {error && (
+        <p className={styles.warning} role="alert">
+          {t.errors[error] ?? t.errors.network}
+        </p>
+      )}
+
+      {loading && items.length === 0 ? (
+        <p className={styles.lead} role="status">
+          {t.loading}
+        </p>
+      ) : items.length === 0 ? (
         <section className={styles.empty} aria-labelledby="empty-title">
           <h2 id="empty-title" className={styles.emptyTitle}>
             {t.emptyTitle}

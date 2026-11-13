@@ -1,5 +1,10 @@
-import { describe, expect, it } from 'vitest'
-import { register, signIn, signOut, getSession, requestPasswordReset, AuthError, DEMO_ACCOUNT } from './auth.js'
+// The browser-side services, tested against a real RELIK server
+// started on a spare port with an empty in-memory database.
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { createDb } from '../../server/db.js'
+import { createApp } from '../../server/app.js'
+import { setApiBase } from './api.js'
+import { register, signIn, signOut, getSession, checkSession, requestPasswordReset, AuthError, DEMO_ACCOUNT } from './auth.js'
 import {
   listItems,
   addItem,
@@ -13,6 +18,21 @@ import {
 } from './collection.js'
 import { validateItem, validateRegister, isEmail } from './validation.js'
 import { readStorage, writeStorage } from './storage.js'
+
+let db
+let server
+
+beforeEach(async () => {
+  db = createDb()
+  server = await new Promise((resolve) => {
+    const s = createApp(db).listen(0, () => resolve(s))
+  })
+  setApiBase(`http://localhost:${server.address().port}/api`)
+})
+
+afterEach(() => {
+  server.close()
+})
 
 describe('storage', () => {
   it('returns the fallback when the key is missing or the JSON is broken', () => {
@@ -47,13 +67,14 @@ describe('validation', () => {
   })
 })
 
-describe('auth (simulated)', () => {
+describe('auth', () => {
   const visitor = { name: 'Amine', email: 'Amine@Example.com', password: 'cassette79' }
 
   it('registers, signs out and signs back in', async () => {
     const session = await register(visitor)
     expect(session).toEqual({ name: 'Amine', email: 'amine@example.com' })
     expect(getSession()).toEqual(session)
+    expect(await checkSession()).toEqual(session)
 
     await signOut()
     expect(getSession()).toBeNull()
@@ -62,9 +83,10 @@ describe('auth (simulated)', () => {
     expect(getSession().name).toBe('Amine')
   })
 
-  it('never stores the password as typed', async () => {
+  it('never stores the password as typed, on the server or in the browser', async () => {
     await register(visitor)
-    expect(JSON.stringify(readStorage('relik:users', {}))).not.toContain('cassette79')
+    expect(JSON.stringify(db.data)).not.toContain('cassette79')
+    expect(JSON.stringify(localStorage.map ? [...localStorage.map] : [])).not.toContain('cassette79')
   })
 
   it('refuses a wrong password', async () => {
@@ -77,11 +99,26 @@ describe('auth (simulated)', () => {
   it('refuses a second account with the same email', async () => {
     await register(visitor)
     await expect(register(visitor)).rejects.toBeInstanceOf(AuthError)
+    await expect(register(visitor)).rejects.toMatchObject({ code: 'emailTaken' })
   })
 
-  it('creates the demo account on first use', async () => {
+  it('checks forms before calling the server', async () => {
+    await expect(register({ name: '', email: 'x', password: '' })).rejects.toMatchObject({
+      code: 'invalid',
+      fields: { name: 'nameRequired', email: 'emailInvalid', password: 'passwordRequired' },
+    })
+  })
+
+  it('has a demo account ready', async () => {
     const session = await signIn({ email: DEMO_ACCOUNT.email, password: DEMO_ACCOUNT.password })
     expect(session.email).toBe(DEMO_ACCOUNT.email)
+  })
+
+  it('forgets a session the server no longer knows', async () => {
+    await register(visitor)
+    db.data.sessions = {}
+    expect(await checkSession()).toBeNull()
+    expect(getSession()).toBeNull()
   })
 
   it('answers a reset request without revealing whether the account exists', async () => {
@@ -89,51 +126,75 @@ describe('auth (simulated)', () => {
       email: 'nobody@example.com',
     })
   })
+
+  it('reports a server that is not running', async () => {
+    setApiBase('http://localhost:1/api')
+    await expect(signIn({ email: 'a@b.co', password: 'whatever1' })).rejects.toMatchObject({ code: 'network' })
+  })
 })
 
-describe('collection (simulated)', () => {
+describe('collection', () => {
   const email = 'amine@example.com'
 
-  it('starts empty for a new account and full of samples for the demo', () => {
-    expect(listItems(email)).toEqual([])
-    const demo = listItems(DEMO_ACCOUNT.email)
+  beforeEach(async () => {
+    await register({ name: 'Amine', email, password: 'cassette79' })
+  })
+
+  it('starts empty for a new account and full of samples for the demo', async () => {
+    expect(await listItems(email)).toEqual([])
+    await signIn({ email: DEMO_ACCOUNT.email, password: DEMO_ACCOUNT.password })
+    const demo = await listItems(DEMO_ACCOUNT.email)
     expect(demo.length).toBe(6)
     expect(demo.every((item) => item.isSample)).toBe(true)
   })
 
-  it('adds, edits and removes a Logbook', () => {
-    const item = addItem(email, { name: 'Sony Walkman WM-2', year: '1981', status: 'In use' })
-    expect(listItems(email)).toHaveLength(1)
+  it('adds, edits and removes a Logbook', async () => {
+    const item = await addItem(email, { name: 'Sony Walkman WM-2', year: '1981', status: 'In use' })
+    expect(await listItems(email)).toHaveLength(1)
     expect(item.year).toBe(1981)
 
-    const updated = updateItem(email, item.id, { status: 'Needs repair', story: 'Belt slipping.' })
+    const updated = await updateItem(email, item.id, { status: 'Needs repair', story: 'Belt slipping.' })
     expect(updated.status).toBe('Needs repair')
-    expect(listItems(email)[0].story).toBe('Belt slipping.')
+    expect((await listItems(email))[0].story).toBe('Belt slipping.')
 
-    removeItem(email, item.id)
-    expect(listItems(email)).toEqual([])
+    await removeItem(email, item.id)
+    expect(await listItems(email)).toEqual([])
   })
 
-  it('saves an archive object once, and unsaves it', () => {
-    saveObject(email, 'walkman-tps-l2')
-    saveObject(email, 'walkman-tps-l2')
-    expect(listItems(email)).toHaveLength(1)
-    expect(isObjectSaved(email, 'walkman-tps-l2')).toBe(true)
-
-    unsaveObject(email, 'walkman-tps-l2')
-    expect(isObjectSaved(email, 'walkman-tps-l2')).toBe(false)
+  it('refuses an invalid Logbook with the field errors', async () => {
+    await expect(addItem(email, { name: '', year: '3000', status: 'Stored' })).rejects.toMatchObject({
+      code: 'invalid',
+      fields: { name: 'nameRequired', year: 'yearInvalid' },
+    })
   })
 
-  it('keeps guest saves and merges them at sign-in', () => {
-    saveObject(null, 'game-boy')
+  it('saves an archive object once, and unsaves it', async () => {
+    await saveObject(email, 'walkman-tps-l2')
+    await saveObject(email, 'walkman-tps-l2')
+    expect(await listItems(email)).toHaveLength(1)
+    expect(await isObjectSaved(email, 'walkman-tps-l2')).toBe(true)
+
+    await unsaveObject(email, 'walkman-tps-l2')
+    expect(await isObjectSaved(email, 'walkman-tps-l2')).toBe(false)
+  })
+
+  it('keeps guest saves in the browser and merges them at sign-in', async () => {
+    await saveObject(null, 'game-boy')
     expect(getGuestSaves()).toEqual(['game-boy'])
 
-    mergeGuestSaves(email)
-    expect(isObjectSaved(email, 'game-boy')).toBe(true)
+    await mergeGuestSaves(email)
+    expect(await isObjectSaved(email, 'game-boy')).toBe(true)
     expect(getGuestSaves()).toEqual([])
   })
 
-  it('ignores unknown object ids', () => {
-    expect(saveObject(email, 'not-an-object')).toBe(false)
+  it('ignores unknown object ids', async () => {
+    expect(await saveObject(email, 'not-an-object')).toBe(false)
+  })
+
+  it('keeps each account separate', async () => {
+    await addItem(email, { name: 'Minitel 1B', status: 'Stored' })
+    await signOut()
+    await register({ name: 'Riley', email: 'riley@example.com', password: 'cassette79' })
+    expect(await listItems('riley@example.com')).toEqual([])
   })
 })

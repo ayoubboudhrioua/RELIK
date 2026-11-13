@@ -22,7 +22,7 @@ const ids = {
 
 // The Logbook form, used both to add a device and to edit one.
 // - item: the item to edit, or null to add a new one
-// - onSave(values): called with valid values
+// - onSave(values): called with valid values; async, may throw an ApiError
 export function ItemForm({ item, onSave, onCancel }) {
   const form = useForm({
     initial: {
@@ -37,7 +37,7 @@ export function ItemForm({ item, onSave, onCancel }) {
     validate: validateItem,
     messages: t.errors,
     async onSubmit(values) {
-      onSave(values)
+      await onSave(values)
     },
   })
 

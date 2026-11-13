@@ -7,4 +7,6 @@ playwright-report/
 .agents/
 .claude/
 design-system/
-./docs/claude.md
+server/data/
+docs/CLAUDE.md
+scripts/

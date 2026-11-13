@@ -10,13 +10,13 @@ test.beforeEach(async ({ page }) => {
   })
 })
 
-test('a very long name and story never push the page sideways', async ({ page }) => {
+test('a very long name and story never push the page sideways', async ({ page }, testInfo) => {
   const longName = 'Grundig' + 'Super'.repeat(14) + 'Kassettenrekorder'
   const longStory = 'Gefunden auf dem Dachboden meiner Großmutter in Kairouan. '.repeat(12)
 
   await page.goto('/register')
   await page.getByLabel('Your name').fill('Riley')
-  await page.getByLabel('Email').fill('riley@example.com')
+  await page.getByLabel('Email').fill(`riley-${testInfo.project.name}-${Date.now()}@example.com`)
   await page.getByLabel('Password', { exact: true }).fill('long-input-test')
   await page.getByRole('button', { name: 'Create account' }).click()
   await expect(page).toHaveURL(/\/collection/)

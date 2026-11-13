@@ -17,16 +17,21 @@ How to get the prototype running on your machine, try it, and check that it stil
 git clone https://github.com/ayoubboudhrioua/relik.git
 cd relik
 npm install
-npx playwright install chromium   # once; needed for the browser tests
+npx playwright install chromium firefox webkit   # once; needed for the browser tests
 ```
 
 ## 2. Run it
 
 ```bash
-npm run dev
+npm run dev:all
 ```
 
-Open <http://localhost:5173>.
+This starts two things: the site (Vite) on <http://localhost:5173> and the API (Express) on
+<http://localhost:3001>. Open the site. <http://localhost:3001/api/health> should answer `{"ok":true}`.
+You can also run them in two terminals: `npm run dev` and `npm run server`.
+In development, always use port 5173: port 3001 only answers the API.
+
+If sign-in says the server is not answering, the API is not running.
 
 ## 3. Try the three journeys by hand
 
@@ -45,17 +50,17 @@ These are the paths the prototype must support end to end.
 - **`?pseudo`** at the end of any address (for example `/lab?pseudo`) makes all text about 30% longer, roughly French length. Nothing should overflow or get cut off.
 - **CRT effects**: the switch in the footer turns the scanlines and screen glow on and off.
 - **Reduced motion**: in Chrome DevTools, open ⋮ → _More tools_ → _Rendering_ → _Emulate CSS prefers-reduced-motion: reduce_. The site should stay complete and calm, with no start-up sequence and no pinned story.
-- **Resetting your data**: accounts and collections are simulated and stored in your browser. Open DevTools → _Application_ → _Local Storage_ and delete the `relik:*` keys.
+- **Resetting your data**: accounts and collections live in `server/data/db.json`. Stop the API, delete that file, and start it again (the demo account comes back). The browser only keeps the session token and objects saved while signed out (`relik:*` keys in DevTools → _Application_ → _Local Storage_).
 
 ## 5. Automated checks
 
 Run these before every push.
 
 ```bash
-npm run test        # unit tests: Lab model, services, archive search, data and credits
-npm run test:e2e    # browser tests: journeys A, B, C, long input, keyboard-only (desktop and phone)
+npm run test        # unit tests: Lab model, services against a real API, API routes, archive search, data and credits
+npm run test:e2e    # browser tests: journeys A, B, C, long input, keyboard-only (Chrome, phone, Firefox, Safari)
 npm run build       # production build in dist/
-npm run preview     # serve that build at http://localhost:4173
+npm start           # build, then serve the site and the API at http://localhost:3001
 ```
 
 If a browser test fails, open the details with:
@@ -87,6 +92,7 @@ Then open a Pull Request on GitHub.
 | Object facts (names, years, stories)   | `src/data/relik-seed-data.json`                |
 | Photo credits                          | `src/data/credits.js` (shown on `/credits`)    |
 | Decision Lab maths                     | `src/lab/model.js` (tested in `model.test.js`) |
+| The API (accounts, collections)        | `server/` (tested in `server/server.test.js`)  |
 | Design tokens (colours, type, spacing) | `src/styles/tokens.css`                        |
 | How the parts fit together             | `docs/ARCHITECTURE.md`                         |
 

@@ -19,13 +19,17 @@ export function QuickLook({ object, onClose }) {
 
   const saved = isSaved(object.id)
 
-  function toggleSave() {
-    if (saved) {
-      unsaveObject(object.id)
-      showToast(en.Logbook.removedToast)
-    } else {
-      saveObject(object.id)
-      showToast(user ? en.Logbook.savedToast : en.Logbook.savedGuestToast)
+  async function toggleSave() {
+    try {
+      if (saved) {
+        await unsaveObject(object.id)
+        showToast(en.Logbook.removedToast)
+      } else {
+        await saveObject(object.id)
+        showToast(user ? en.Logbook.savedToast : en.Logbook.savedGuestToast)
+      }
+    } catch {
+      showToast(en.collection.actionFailed)
     }
   }
 

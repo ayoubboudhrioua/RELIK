@@ -80,11 +80,12 @@ test('B: Home → Decision Lab → device → criteria → futures → reset', a
   if (!isPhone(testInfo)) await expect(page.getByLabel(/Macintosh Classic/)).toBeChecked()
 })
 
-test('C: Sign in → My Collection → add a Logbook → edit it → back to the collection', async ({ page }) => {
-  // Create an account (simulated) and land in an empty collection.
+test('C: Sign in → My Collection → add a Logbook → edit it → back to the collection', async ({ page }, testInfo) => {
+  // Create an account on the server and land in an empty collection.
+  // A new email each run, because the server keeps accounts between tests.
   await page.goto('/register')
   await page.getByLabel('Your name').fill('Amine')
-  await page.getByLabel('Email').fill('amine@example.com')
+  await page.getByLabel('Email').fill(`amine-${testInfo.project.name}-${Date.now()}@example.com`)
   await page.getByLabel('Password', { exact: true }).fill('cassette79')
   await page.getByRole('button', { name: 'Create account' }).click()
   await expect(page).toHaveURL(/\/collection/)

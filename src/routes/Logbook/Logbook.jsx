@@ -39,13 +39,17 @@ function TitleBand({ object }) {
   const saved = isSaved(object.id)
   const period = periods.find((p) => p.id === object.period)
 
-  function toggleSave() {
-    if (saved) {
-      unsaveObject(object.id)
-      showToast(t.removedToast)
-    } else {
-      saveObject(object.id)
-      showToast(user ? t.savedToast : t.savedGuestToast)
+  async function toggleSave() {
+    try {
+      if (saved) {
+        await unsaveObject(object.id)
+        showToast(t.removedToast)
+      } else {
+        await saveObject(object.id)
+        showToast(user ? t.savedToast : t.savedGuestToast)
+      }
+    } catch {
+      showToast(en.collection.actionFailed)
     }
   }
 

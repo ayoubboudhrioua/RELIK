@@ -5,55 +5,84 @@ import { useAuth } from './useAuth.jsx'
 
 const CollectionContext = createContext(null)
 
-// Shares the visitor's collection with every page and keeps it in sync
-// with localStorage. When signed out, `items` is empty but archive objects
-// can still be saved (they join the collection at the next sign-in).
+// Shares the visitor's collection with every page.
+// Signed in: the list comes from the server. Signed out: `items` is empty but
+// archive objects can still be saved (they join the collection at the next sign-in).
+//
+// useCollection() gives { items, loading, error, canStore, isSaved,
+// saveObject, unsaveObject, addItem, updateItem, removeItem }.
+// The actions are async and throw an ApiError if the server says no.
 export function CollectionProvider({ children }) {
   const { user } = useAuth()
   const email = user?.email ?? null
-  const [items, setItems] = useState(() => (email ? store.listItems(email) : []))
+  const [items, setItems] = useState([])
+  const [loading, setLoading] = useState(Boolean(email))
+  const [error, setError] = useState('') // an error code, e.g. 'network'
   const [guestSaves, setGuestSaves] = useState(() => store.getGuestSaves())
+
+  async function load(isCancelled = () => false) {
+    setGuestSaves(store.getGuestSaves())
+    if (!email) {
+      setItems([])
+      setLoading(false)
+      setError('')
+      return
+    }
+    try {
+      const list = await store.listItems(email)
+      if (isCancelled()) return
+      setItems(list)
+      setError('')
+    } catch (problem) {
+      if (!isCancelled()) setError(problem.code ?? 'network')
+    } finally {
+      if (!isCancelled()) setLoading(false)
+    }
+  }
 
   // Reload when the visitor signs in or out.
   useEffect(() => {
-    setItems(email ? store.listItems(email) : [])
-    setGuestSaves(store.getGuestSaves())
+    let cancelled = false
+    setLoading(Boolean(email))
+    load(() => cancelled)
+    return () => {
+      cancelled = true
+    }
+    // load() only depends on email.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [email])
-
-  function refresh() {
-    setItems(email ? store.listItems(email) : [])
-    setGuestSaves(store.getGuestSaves())
-  }
 
   const value = {
     items,
+    loading,
+    error,
     // False when the browser blocks storage: the page then warns that
-    // the collection will not be kept.
+    // the session will not be kept after the tab closes.
     canStore: storageAvailable(),
     isSaved(objectId) {
       return email ? items.some((item) => item.objectId === objectId) : guestSaves.includes(objectId)
     },
-    saveObject(objectId) {
-      store.saveObject(email, objectId)
-      refresh()
+    async saveObject(objectId) {
+      await store.saveObject(email, objectId)
+      await load()
     },
-    unsaveObject(objectId) {
-      store.unsaveObject(email, objectId)
-      refresh()
+    async unsaveObject(objectId) {
+      await store.unsaveObject(email, objectId)
+      await load()
     },
-    addItem(data) {
-      const item = store.addItem(email, data)
-      refresh()
+    async addItem(data) {
+      const item = await store.addItem(email, data)
+      await load()
       return item
     },
-    updateItem(id, changes) {
-      const item = store.updateItem(email, id, changes)
-      refresh()
+    async updateItem(id, changes) {
+      const item = await store.updateItem(email, id, changes)
+      await load()
       return item
     },
-    removeItem(id) {
-      store.removeItem(email, id)
-      refresh()
+    async removeItem(id) {
+      await store.removeItem(email, id)
+      await load()
     },
   }
 
