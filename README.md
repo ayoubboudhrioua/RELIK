@@ -157,13 +157,7 @@ Les tests navigateur démarrent eux-mêmes l'API (avec une base vide) et le site
 
 Ils sont configurés pour Chrome bureau, Chrome mobile (Pixel 7, 390 px), Firefox et Safari (WebKit).
 
-**Lighthouse** (build de production, 6 novembre 2026) :
 
-| Page | Performance (mobile / bureau) | Accessibilité | Bonnes pratiques | SEO |
-| --- | --- | --- | --- | --- |
-| Accueil | 96 / 100 | 100 | 100 | 100 |
-| Archive | 97 / 99 | 100 | 100 | 100 |
-| Decision Lab | 99 / 100 | 100 | 100 | 100 |
 
 ## 6. Structure du projet
 
