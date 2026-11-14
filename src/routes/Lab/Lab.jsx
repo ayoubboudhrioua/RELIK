@@ -1,4 +1,3 @@
-import { Backdrop } from '../../components/Backdrop/Backdrop.jsx'
 import { useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Fader } from '../../components/Fader/Fader.jsx'
@@ -107,7 +106,6 @@ export function Lab() {
 
   return (
     <div className={styles.page} data-room="dark">
-      <Backdrop />
       {/* Phones after step 1: a slim header so each step starts near the top. */}
       <header className={`${styles.header} ${compact && step > 0 ? styles.headerSlim : ''}`}>
         <div className={styles.headerText}>

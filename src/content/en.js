@@ -91,7 +91,6 @@ export const en = {
     },
     story: {
       title: 'A story worth preserving',
-      intro: 'One object, four chapters. Press a track or keep scrolling.',
       sideA: 'Side A',
       sideB: 'Side B',
       tracksLabel: 'Chapters',
@@ -127,7 +126,6 @@ export const en = {
       title: 'Decide before you discard',
       text: 'Tell the Decision Lab how the device works, how easy it is to repair, how useful it still is and how much it matters. Six possible futures light up.',
       cta: 'Try the Decision Lab',
-      note: 'Illustrative, sample assumptions.',
       presetLabel: 'Preset: Walkman TPS-L2, plays unevenly, belt worn',
       futuresLabel: 'Six futures for this Walkman',
     },

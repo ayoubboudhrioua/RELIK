@@ -25,21 +25,10 @@
   overflow: hidden;
 }
 
-/* Moved by JavaScript at 0.2× the scroll speed (see motion/backdrop.js).
-   Three screens tall, so the wrap-around offset never shows an edge. */
-.shift {
-  position: absolute;
-  top: 0;
-  left: -10%;
-  width: 120%;
-  height: 300%;
-  will-change: transform;
-}
-
 /*
-  Two soft phosphor pools per screen height, repeated down the layer.
-  Peak alpha 0.07: every text colour on graphite, sunken and CRT grounds
-  keeps at least 4.5:1, and control lines at least 3:1 (see DESIGN.md).
+  A soft, slow phosphor glow under the picture. It is also what shows if the
+  browser has no WebGL 2 (CRTWarp then draws nothing).
+  Peak alpha 0.07, as before.
 */
 .glow {
   position: absolute;
@@ -47,8 +36,6 @@
   background:
     radial-gradient(46% 38% at 24% 30%, rgb(255 176 0 / 0.07), rgb(255 176 0 / 0) 70%),
     radial-gradient(40% 34% at 76% 72%, rgb(255 150 30 / 0.05), rgb(255 150 30 / 0) 70%);
-  background-size: 100% calc(100% / 3);
-  background-repeat: repeat-y;
   animation: drift 48s var(--ease-in-out) infinite alternate;
 }
 
@@ -68,23 +55,37 @@
   }
 }
 
-:global(html[data-backdrop-paused]) .glow {
-  animation-play-state: paused;
+/*
+  The CRT picture (React Bits CRTWarp). Its background is transparent, so it
+  only adds a little amber light on top of the room's graphite.
+  --crt-strength is kept very low on purpose: the picture should only be
+  noticed when you look for it. A room can change it, e.g.
+  `.room { --crt-strength: 0.08; }`.
+*/
+.crt {
+  opacity: var(--crt-strength, 0.12);
 }
 
-/* Static texture: scanlines at 8% (darkening only, so contrast can only rise). */
-.scanlines {
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(180deg, rgb(0 0 0 / 0.08) 0 1px, transparent 1px 3px);
-}
+/* ---- VCR date and time ---- */
 
-/* A very faint static grain: white noise at 5% opacity (about 3% at its brightest). */
-.grain {
+/* The --room-* edges are set by Backdrop.jsx: the visible part of the room. */
+.osd {
+  --osd-gap: clamp(1rem, 2.5vw, 2rem);
   position: absolute;
-  inset: 0;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  opacity: 0.05;
+  top: calc(var(--room-top, 0px) + var(--osd-gap));
+  right: calc(var(--room-right, 0px) + var(--osd-gap));
+  bottom: calc(var(--room-bottom, 0px) + var(--osd-gap));
+  left: calc(var(--room-left, 0px) + var(--osd-gap));
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  font-family: var(--font-screen);
+  font-size: clamp(1rem, 1.3vw, 1.2rem);
+  line-height: 1;
+  letter-spacing: 0.08em;
+  color: var(--amber);
+  /* Faint on purpose: a stamp you find, not one that calls you. */
+  opacity: var(--osd-strength, 0.2);
 }
 
 @media (prefers-reduced-motion: reduce) {

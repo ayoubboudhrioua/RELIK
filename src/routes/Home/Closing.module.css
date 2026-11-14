@@ -10,7 +10,7 @@
 .missionTitle {
   font-family: var(--font-mono);
   font-stretch: 100%;
-  font-size: var(--text-sm);
+  font-size: var(--text-2x1);
   font-weight: 600;
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
